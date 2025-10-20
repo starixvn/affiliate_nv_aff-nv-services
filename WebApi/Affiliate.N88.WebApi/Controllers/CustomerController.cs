@@ -5,17 +5,17 @@ using Affiliate.N88.SpParams.Criteria;
 using Affiliate.N88.WebApi.Models;
 using Fanex.Data.Repository;
 using Fanex.Logging;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http;
+using System.Linq;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
-    public class CustomerController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class CustomerController : ControllerBase
     {
         private const int _Marketing_Cust_ID = -1;
         private readonly IDynamicRepository dynamicRepository;
@@ -26,49 +26,49 @@ namespace Affiliate.N88.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<AffCustomerModel>> GetAffCustomers(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
+        public async Task<ActionResult<IEnumerable<AffCustomerModel>>> GetAffCustomers(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
         {
-            return await dynamicRepository.FetchAsync<AffCustomerModel>(new GetAffCustomersCriteria(fromDate, toDate, pageIndex, pageSize));
+            return Ok(await dynamicRepository.FetchAsync<AffCustomerModel>(new GetAffCustomersCriteria(fromDate, toDate, pageIndex, pageSize)));
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CustomerInfo>> GetCustomers(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
-            => await dynamicRepository.FetchAsync<CustomerInfo>(new GetCustomersCriteria(fromDate, toDate, pageIndex, pageSize));
+        public async Task<ActionResult<IEnumerable<CustomerInfo>>> GetCustomers(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
+            => Ok(await dynamicRepository.FetchAsync<CustomerInfo>(new GetCustomersCriteria(fromDate, toDate, pageIndex, pageSize)));
 
         [HttpGet]
-        public async Task<IEnumerable<CustomerInfo>> GetFixedCustomers()
-            => await dynamicRepository.FetchAsync<CustomerInfo>(new GetFixedCustomerCriteria());
+        public async Task<ActionResult<IEnumerable<CustomerInfo>>> GetFixedCustomers()
+            => Ok(await dynamicRepository.FetchAsync<CustomerInfo>(new GetFixedCustomerCriteria()));
 
         [HttpGet]
-        public async Task<IEnumerable<CustWalletInfo>> GetCustWallets(DateTime fromDate)
-            => await dynamicRepository.FetchAsync<CustWalletInfo>(new GetCustWalletCriteria(fromDate));
+        public async Task<ActionResult<IEnumerable<CustWalletInfo>>> GetCustWallets(DateTime fromDate)
+            => Ok(await dynamicRepository.FetchAsync<CustWalletInfo>(new GetCustWalletCriteria(fromDate)));
 
         [HttpGet]
-        public async Task<CustomerInfo> GetLoginCustomerInfo(string userName, int siteId)
+        public async Task<ActionResult<CustomerInfo>> GetLoginCustomerInfo(string userName, int siteId)
         {
             CustomerInfo cust = null;
             if (!HasNonASCIIChars(userName))
             {
                 cust = await dynamicRepository.GetAsync<CustomerInfo>(new GetLoginCustInfoCriteria() { UserName = userName, SiteId = siteId });
             }
-            return cust;
+            return Ok(cust);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CustRegModel>> GetCustomerRegInfo(long unixTime)
+        public async Task<ActionResult<IEnumerable<CustRegModel>>> GetCustomerRegInfo(long unixTime)
         {
             var infos = await dynamicRepository.FetchAsync<CustRegInfo>(new GetCustRegInfoCriteria(unixTime));
-            return infos.Select(i => new CustRegModel
+            return Ok(infos.Select(i => new CustRegModel
             {
                 CustId = i.CustId,
                 RegTime = DateTimeOffset.Parse(i.RegTime),
                 SignUpUrl = i.SignUpUrl,
                 SiteId = i.SiteId
-            });
+            }));
         }
 
         [HttpPost]
-        public async Task<decimal> UpdateCustomerWallet(PaymentRequestInfo payment)
+        public async Task<ActionResult<decimal>> UpdateCustomerWallet(PaymentRequestInfo payment)
         {
             await LogService.InfoAsync($"Recevice update wallet request\n" +
                 $"Param: {JsonConvert.SerializeObject(payment)}\n" +
@@ -87,41 +87,41 @@ namespace Affiliate.N88.WebApi.Controllers
 
             await dynamicRepository.ExecuteAsync(criteria);
             await LogService.InfoAsync($"AfterAmount: {criteria.AfterAmount}");
-            return criteria.AfterAmount;
+            return Ok(criteria.AfterAmount);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CustBonusRolloverModel>> GetCustBonusRollOvers(int id, int batchCount = 2000)
-            => await dynamicRepository.FetchAsync<CustBonusRolloverModel>(new GetCustBonusRolloverCriteria(id, batchCount));
+        public async Task<ActionResult<IEnumerable<CustBonusRolloverModel>>> GetCustBonusRollOvers(int id, int batchCount = 2000)
+            => Ok(await dynamicRepository.FetchAsync<CustBonusRolloverModel>(new GetCustBonusRolloverCriteria(id, batchCount)));
 
         [HttpGet]
-        public async Task<IEnumerable<CustClosingBalanceModel>> GetCustClosingBalance(DateTime lastGetTime, int pageIndex, int pageSize = 2000)
-            => await dynamicRepository.FetchAsync<CustClosingBalanceModel>(new GetCustClosingBalanceCriteria(lastGetTime, pageIndex, pageSize));
+        public async Task<ActionResult<IEnumerable<CustClosingBalanceModel>>> GetCustClosingBalance(DateTime lastGetTime, int pageIndex, int pageSize = 2000)
+            => Ok(await dynamicRepository.FetchAsync<CustClosingBalanceModel>(new GetCustClosingBalanceCriteria(lastGetTime, pageIndex, pageSize)));
 
         [HttpPost]
-        public async Task<ResultInfo> UnlockUser(int[] userIds)
+        public async Task<ActionResult<ResultInfo>> UnlockUser(int[] userIds)
         {
             try
             {
                 var json = BuildJson(userIds);
                 await dynamicRepository.ExecuteAsync(new UnlockUsersCommand { CustIdList = json });
-                return new ResultInfo
+                return Ok(new ResultInfo
                 {
                     IsSuccess = true
-                };
+                });
             }
             catch (Exception ex)
             {
-                return new ResultInfo
+                return Ok(new ResultInfo
                 {
                     IsSuccess = false,
                     ErrMsg = ex.Message
-                };
+                });
             }
         }
 
         [HttpPost]
-        public async Task<ResultInfo> InsertAffiliateInfo(AffiliateInfoParam affiliate)
+        public async Task<ActionResult<ResultInfo>> InsertAffiliateInfo(AffiliateInfoParam affiliate)
         {
             try
             {
@@ -140,39 +140,39 @@ namespace Affiliate.N88.WebApi.Controllers
                     Email = affiliate.Email ?? string.Empty,
                     Status = affiliate.Status ?? string.Empty
                 });
-                return new ResultInfo { IsSuccess = true };
+                return Ok(new ResultInfo { IsSuccess = true });
             }
             catch (Exception ex)
             {
-                return new ResultInfo
+                return Ok(new ResultInfo
                 {
                     IsSuccess = false,
                     ErrMsg = ex.Message
-                };
+                });
             }
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CustBalanceInfo>> GetCustBalance([FromUri]int[] ids)
+        public async Task<ActionResult<IEnumerable<CustBalanceInfo>>> GetCustBalance([FromQuery]int[] ids)
         {
             var json = BuildJson(ids);
-            return await dynamicRepository.FetchAsync<CustBalanceInfo>(new GetCustBalanceCriteria(json));
+            return Ok(await dynamicRepository.FetchAsync<CustBalanceInfo>(new GetCustBalanceCriteria(json)));
         }
 
         [HttpGet]
-        public async Task<IEnumerable<VipUpgradeReviewInfo>> GetVipUpgradeReviews(DateTime monthDate, int pageIndex, int pageSize)
+        public async Task<ActionResult<IEnumerable<VipUpgradeReviewInfo>>> GetVipUpgradeReviews(DateTime monthDate, int pageIndex, int pageSize)
         {
             var txtMonthDate = monthDate.ToString("yyyyMM");
-            return await dynamicRepository.FetchAsync<VipUpgradeReviewInfo>(new GetVipUpgradeReviewCriteria
+            return Ok(await dynamicRepository.FetchAsync<VipUpgradeReviewInfo>(new GetVipUpgradeReviewCriteria
             {
                 MonthDate = txtMonthDate,
                 PageIndex = pageIndex,
                 PageSize = pageSize
-            });
+            }));
         }
 
         [HttpPost]
-        public async Task<ResultInfo> TransferMoneyToPlayer(TransferMoneyParam param)
+        public async Task<ActionResult<ResultInfo>> TransferMoneyToPlayer(TransferMoneyParam param)
         {
             await LogService.InfoAsync($"Receive transfer money request\n" +
                 $"Param: {JsonConvert.SerializeObject(param)}\n" +
@@ -200,24 +200,24 @@ namespace Affiliate.N88.WebApi.Controllers
             }
 
             await LogService.InfoAsync($"ErrCode: {command.ErrCode}");
-            return new ResultInfo
+            return Ok(new ResultInfo
             {
                 ErrMsg = command.ErrCode.ToString(),
                 IsSuccess = command.ErrCode == 0
-            };
+            });
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CustVerificationReward>> GetCustVerificationRewards(DateTime lastGetTime, string conditionField, int batchCount = 2000)
-            => await dynamicRepository.FetchAsync<CustVerificationReward>(new GetCustVerificationRewardCriteria(lastGetTime, conditionField, batchCount));
+        public async Task<ActionResult<IEnumerable<CustVerificationReward>>> GetCustVerificationRewards(DateTime lastGetTime, string conditionField, int batchCount = 2000)
+            => Ok(await dynamicRepository.FetchAsync<CustVerificationReward>(new GetCustVerificationRewardCriteria(lastGetTime, conditionField, batchCount)));
 
         private static string BuildJson(int[] userIds)
             => $"[{string.Join(",", userIds)}]";
 
         private string GetIpAddress()
         {
-            System.Web.HttpContext context = System.Web.HttpContext.Current;
-            string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            var httpContext = HttpContext;
+            string ipAddress = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
 
             if (!string.IsNullOrEmpty(ipAddress))
             {
@@ -228,7 +228,7 @@ namespace Affiliate.N88.WebApi.Controllers
                 }
             }
 
-            return context.Request.ServerVariables["REMOTE_ADDR"];
+            return httpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
         }
 
         private static bool HasNonASCIIChars(string str)

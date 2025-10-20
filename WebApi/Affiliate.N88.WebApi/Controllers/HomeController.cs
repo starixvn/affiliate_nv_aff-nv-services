@@ -1,21 +1,24 @@
 ﻿using Affiliate.N88.Models;
 using Affiliate.N88.SpParams.Criteria;
 using Fanex.Data.Repository;
-using System;
-using System.Configuration;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
-    public class HomeController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class HomeController : ControllerBase
     {
         private readonly IDynamicRepository dynamicRepository;
+        private readonly IConfiguration configuration;
 
-        public HomeController(IDynamicRepository dynamicRepository)
+        public HomeController(IDynamicRepository dynamicRepository, IConfiguration configuration)
         {
             this.dynamicRepository = dynamicRepository;
+            this.configuration = configuration;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             var connectedMessage = "Database connects successfully";
@@ -28,13 +31,9 @@ namespace Affiliate.N88.WebApi.Controllers
                 connectedMessage = ex.ToString();
             }
 
-            var env = ConfigurationManager.AppSettings.Get("Enviroment");
+            var env = configuration["Enviroment"];
 
-            return new ContentResult
-            {
-                Content = $"Site is running {env} <br/> {connectedMessage}",
-                ContentType = "text/html"
-            };
+            return Content($"Site is running {env} <br/> {connectedMessage}", "text/html");
         }
     }
 }

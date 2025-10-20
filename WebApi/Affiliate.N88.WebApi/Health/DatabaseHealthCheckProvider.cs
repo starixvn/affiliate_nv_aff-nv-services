@@ -17,7 +17,7 @@ namespace Affiliate.N88.WebApi.Health
         public int SortOrder { get; }
 
 
-        public DatabaseHealthCheckProvider(IDynamicRepository repo, DatabaseServerType databaseServerType, int sortOrder = 20)
+        public DatabaseHealthCheckProvider(IDynamicRepository repo, DatabaseServerType databaseServerType, int sortOrder)
         {
             Repo = repo;
             DatabaseServerType = databaseServerType;

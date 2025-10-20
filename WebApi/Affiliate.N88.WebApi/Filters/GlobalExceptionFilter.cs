@@ -1,22 +1,23 @@
-﻿using Fanex.Logging.Extensions.Web;
-using System;
-using System.Configuration;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Filters;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Affiliate.N88.WebApi.Filters
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public sealed class GlobalExceptionFilter : ExceptionFilterAttribute
+    public class GlobalExceptionFilter : IExceptionFilter
     {
-        public override void OnException(HttpActionExecutedContext actionExecutedContext)
+        public void OnException(ExceptionContext context)
         {
-            if (actionExecutedContext != null)
+            if (context.Exception != null)
             {
-                var exception = actionExecutedContext.Exception;
-                ExceptionHandler.Handle(exception);
-                actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(System.Net.HttpStatusCode.InternalServerError, new HttpError(exception, true));
+                var exception = context.Exception;
+                //ExceptionHandler.Handle(exception);
+                
+                context.Result = new ObjectResult(new { error = exception.Message })
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+                context.ExceptionHandled = true;
             }
         }
     }

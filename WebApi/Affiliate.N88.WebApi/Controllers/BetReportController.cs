@@ -1,14 +1,13 @@
 ﻿using Affiliate.N88.Models;
 using Affiliate.N88.SpParams.Criteria;
 using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
-    public class BetReportController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class BetReportController : ControllerBase
     {
         private readonly IDynamicRepository dynamicRepository;
 
@@ -18,34 +17,34 @@ namespace Affiliate.N88.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TransBetRecordInfo>> GetBetRecord(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
+        public async Task<ActionResult<IEnumerable<TransBetRecordInfo>>> GetBetRecord(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
         {
             var betlist = await dynamicRepository.FetchAsync<TransBetRecordInfo>(new GetBetRecordCriteria(fromDate, toDate, pageIndex, pageSize));
-            return betlist;
+            return Ok(betlist);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TpTransferInfo>> GetTpTransferInfo(int id, int totalRow)
-            => await dynamicRepository.FetchAsync<TpTransferInfo>(new GetTpTransferInfoCriteria(id, totalRow));
+        public async Task<ActionResult<IEnumerable<TpTransferInfo>>> GetTpTransferInfo(int id, int totalRow)
+            => Ok(await dynamicRepository.FetchAsync<TpTransferInfo>(new GetTpTransferInfoCriteria(id, totalRow)));
 
         [HttpGet]
-        public async Task<IEnumerable<DepositInfo>> GetDepositInfo(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
-            => await dynamicRepository.FetchAsync<DepositInfo>(new GetDepositInfoCriteria(fromDate, toDate, pageIndex, pageSize));
+        public async Task<ActionResult<IEnumerable<DepositInfo>>> GetDepositInfo(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
+            => Ok(await dynamicRepository.FetchAsync<DepositInfo>(new GetDepositInfoCriteria(fromDate, toDate, pageIndex, pageSize)));
 
         [HttpGet]
-        public async Task<IEnumerable<BonusDTO>> GetBonusInfo(int id, int batchCount = 2000)
-            => await dynamicRepository.FetchAsync<BonusDTO>(new GetBonusInfoCriteria(id, batchCount));
+        public async Task<ActionResult<IEnumerable<BonusDTO>>> GetBonusInfo(int id, int batchCount = 2000)
+            => Ok(await dynamicRepository.FetchAsync<BonusDTO>(new GetBonusInfoCriteria(id, batchCount)));
 
         [HttpGet]
-        public async Task<IEnumerable<BonusDTO>> GetBonusInfoByDate(DateTime calledTime, int pageIndex, int pageSize = 2000)
-            => await dynamicRepository.FetchAsync<BonusDTO>(new GetBonusInfoByDateCriteria(calledTime, pageIndex, pageSize));
+        public async Task<ActionResult<IEnumerable<BonusDTO>>> GetBonusInfoByDate(DateTime calledTime, int pageIndex, int pageSize = 2000)
+            => Ok(await dynamicRepository.FetchAsync<BonusDTO>(new GetBonusInfoByDateCriteria(calledTime, pageIndex, pageSize)));
 
         [HttpGet]
-        public async Task<IEnumerable<Withdrawal>> GetWithdrawalInfo(DateTime updateTime, int batchCount = 2000)
-            => await dynamicRepository.FetchAsync<Withdrawal>(new GetWithdrawalInfoCriteria(updateTime, batchCount));
+        public async Task<ActionResult<IEnumerable<Withdrawal>>> GetWithdrawalInfo(DateTime updateTime, int batchCount = 2000)
+            => Ok(await dynamicRepository.FetchAsync<Withdrawal>(new GetWithdrawalInfoCriteria(updateTime, batchCount)));
 
         [HttpGet]
-        public async Task<IEnumerable<AdjustmentInfo>> GetAdjustmentInfos(int id, int batchCount = 2000)
-            => await dynamicRepository.FetchAsync<AdjustmentInfo>(new GetAdjustmentInfoCriteria(id, batchCount));
+        public async Task<ActionResult<IEnumerable<AdjustmentInfo>>> GetAdjustmentInfos(int id, int batchCount = 2000)
+            => Ok(await dynamicRepository.FetchAsync<AdjustmentInfo>(new GetAdjustmentInfoCriteria(id, batchCount)));
     }
 }
