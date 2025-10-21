@@ -1,5 +1,6 @@
 using Affiliate.N88.WebApi.Filters;
 using Affiliate.N88.WebApi.Health;
+using Affiliate.N88.WebApi.Middleware;
 using Affiliate.N88.WebApi.Repository;
 using Fanex.Data;
 using Fanex.Data.MySql;
@@ -23,7 +24,6 @@ builder.Services.AddMemoryCache();
 var isTest = builder.Configuration.GetValue<bool>("IsTest");
 var authenticationKey = builder.Configuration["AuthenticationKey"];
 
-builder.Services.AddScoped<GlobalExceptionFilter>();
 if (!isTest)
 {
     builder.Services.AddScoped<HmacAuthorizationFilter>(provider =>
@@ -32,7 +32,6 @@ if (!isTest)
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<GlobalExceptionFilter>();
     if (!isTest)
     {
         options.Filters.AddService(typeof(HmacAuthorizationFilter));
@@ -67,6 +66,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Use Global Exception Middleware
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 app.UseAuthorization();
 
 // Default root endpoint
@@ -91,7 +93,7 @@ app.MapControllerRoute(
 InitializeLogging(app.Configuration);
 InitializeFanexData(app.Configuration);
 
-app.Run();
+await app.RunAsync();
 
 static void InitializeLogging(IConfiguration configuration)
 {

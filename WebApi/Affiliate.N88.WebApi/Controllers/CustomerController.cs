@@ -1,15 +1,13 @@
-﻿using Affiliate.N88.Models;
+﻿using System.Text;
+using Affiliate.N88.Models;
 using Affiliate.N88.Params;
 using Affiliate.N88.SpParams.Commands;
 using Affiliate.N88.SpParams.Criteria;
 using Affiliate.N88.WebApi.Models;
 using Fanex.Data.Repository;
 using Fanex.Logging;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Text;
-using System.Linq;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
@@ -25,25 +23,28 @@ namespace Affiliate.N88.WebApi.Controllers
             this.dynamicRepository = dynamicRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetAffCustomers")]
         public async Task<ActionResult<IEnumerable<AffCustomerModel>>> GetAffCustomers(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
         {
             return Ok(await dynamicRepository.FetchAsync<AffCustomerModel>(new GetAffCustomersCriteria(fromDate, toDate, pageIndex, pageSize)));
         }
 
-        [HttpGet]
+        [HttpGet("GetCustomers")]
         public async Task<ActionResult<IEnumerable<CustomerInfo>>> GetCustomers(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
             => Ok(await dynamicRepository.FetchAsync<CustomerInfo>(new GetCustomersCriteria(fromDate, toDate, pageIndex, pageSize)));
 
-        [HttpGet]
+        [HttpGet("GetFixedCustomers")]
         public async Task<ActionResult<IEnumerable<CustomerInfo>>> GetFixedCustomers()
-            => Ok(await dynamicRepository.FetchAsync<CustomerInfo>(new GetFixedCustomerCriteria()));
+        {
+            var result = await dynamicRepository.FetchAsync<CustomerInfo>(new GetFixedCustomerCriteria());
+            return Ok(result);
+        }
 
-        [HttpGet]
+        [HttpGet("GetCustWallets")]
         public async Task<ActionResult<IEnumerable<CustWalletInfo>>> GetCustWallets(DateTime fromDate)
             => Ok(await dynamicRepository.FetchAsync<CustWalletInfo>(new GetCustWalletCriteria(fromDate)));
 
-        [HttpGet]
+        [HttpGet("GetLoginCustomerInfo")]
         public async Task<ActionResult<CustomerInfo>> GetLoginCustomerInfo(string userName, int siteId)
         {
             CustomerInfo cust = null;
@@ -54,7 +55,7 @@ namespace Affiliate.N88.WebApi.Controllers
             return Ok(cust);
         }
 
-        [HttpGet]
+        [HttpGet("GetCustomerRegInfo")]
         public async Task<ActionResult<IEnumerable<CustRegModel>>> GetCustomerRegInfo(long unixTime)
         {
             var infos = await dynamicRepository.FetchAsync<CustRegInfo>(new GetCustRegInfoCriteria(unixTime));
@@ -90,11 +91,11 @@ namespace Affiliate.N88.WebApi.Controllers
             return Ok(criteria.AfterAmount);
         }
 
-        [HttpGet]
+        [HttpGet("GetCustBonusRollOvers")]
         public async Task<ActionResult<IEnumerable<CustBonusRolloverModel>>> GetCustBonusRollOvers(int id, int batchCount = 2000)
             => Ok(await dynamicRepository.FetchAsync<CustBonusRolloverModel>(new GetCustBonusRolloverCriteria(id, batchCount)));
 
-        [HttpGet]
+        [HttpGet("GetCustClosingBalance")]
         public async Task<ActionResult<IEnumerable<CustClosingBalanceModel>>> GetCustClosingBalance(DateTime lastGetTime, int pageIndex, int pageSize = 2000)
             => Ok(await dynamicRepository.FetchAsync<CustClosingBalanceModel>(new GetCustClosingBalanceCriteria(lastGetTime, pageIndex, pageSize)));
 
@@ -152,14 +153,14 @@ namespace Affiliate.N88.WebApi.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("GetCustBalance")]
         public async Task<ActionResult<IEnumerable<CustBalanceInfo>>> GetCustBalance([FromQuery]int[] ids)
         {
             var json = BuildJson(ids);
             return Ok(await dynamicRepository.FetchAsync<CustBalanceInfo>(new GetCustBalanceCriteria(json)));
         }
 
-        [HttpGet]
+        [HttpGet("GetVipUpgradeReviews")]
         public async Task<ActionResult<IEnumerable<VipUpgradeReviewInfo>>> GetVipUpgradeReviews(DateTime monthDate, int pageIndex, int pageSize)
         {
             var txtMonthDate = monthDate.ToString("yyyyMM");
@@ -207,7 +208,7 @@ namespace Affiliate.N88.WebApi.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet("GetCustVerificationRewards")]
         public async Task<ActionResult<IEnumerable<CustVerificationReward>>> GetCustVerificationRewards(DateTime lastGetTime, string conditionField, int batchCount = 2000)
             => Ok(await dynamicRepository.FetchAsync<CustVerificationReward>(new GetCustVerificationRewardCriteria(lastGetTime, conditionField, batchCount)));
 

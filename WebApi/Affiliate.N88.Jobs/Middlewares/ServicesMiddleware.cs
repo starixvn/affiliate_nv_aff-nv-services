@@ -63,7 +63,7 @@ namespace Affiliate.N88.Jobs.Middlewares
 
             DbSettingProviderManager
                 .StartNewSession()
-                .WithSqlServer(resourcePath: $"~/App_Data/SpNames.xml")
+                .WithSqlServer(configuration)
                 .Use(connectionStrings)
                 .Run();
         }

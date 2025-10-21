@@ -1,6 +1,6 @@
 ﻿using Affiliate.N88.WebApi.DTO;
-using Affiliate.N88.WebApi.Extensions;
-using Fanex.Data;
+using Affiliate.N88.SpParams.Criteria;
+using Fanex.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,45 +9,17 @@ namespace Affiliate.N88.WebApi.Repository
 {
     public class PromotionRepository : IPromotionRepository
     {
+        private readonly IDynamicRepository _dynamicRepository;
+
+        public PromotionRepository(IDynamicRepository dynamicRepository)
+        {
+            _dynamicRepository = dynamicRepository ?? throw new ArgumentNullException(nameof(dynamicRepository));
+        }
+
         public async Task<IEnumerable<Promotion>> GetPromotionsAsync(DateTime fromDate, DateTime toDate)
         {
-            var spKey = "API_Promotion_Get";
-            using (var objectDb = ObjectDbFactory.CreateInstance(spKey))
-            {
-                using (var reader = await objectDb.ExecuteReaderAsync(new { FromDate = fromDate, ToDate = toDate }))
-                {
-                    var promos = new List<Promotion>();
-                    while (reader.Read())
-                    {
-                        promos.Add(new Promotion
-                        {
-                            BonusCode = reader.GetVal<string>("BonusCode"),
-                            CategoryId = reader.GetVal<int>("CategoryId"),
-                            CreateTime = reader.GetVal<string>("CreateTime"),
-                            Description = reader.GetVal<string>("Description"),
-                            EndDate = Convert.ToDateTime(reader["EndDate"]),
-                            ExpiryDays = reader.GetVal<int>("ExpiryDays"),
-                            IsSpecial = reader.GetVal<bool>("IsSpecial"),
-                            LastUpdateTime = reader.GetVal<DateTime?>("LastUpdateTime"),
-                            LastUpdateUser = reader.GetVal<string>("LastUpdateUser"),
-                            PeriodDay = reader.GetVal<int?>("PeriodDay"),
-                            PeriodFrom = reader.GetVal<long>("PeriodFrom"),
-                            PeriodTo = reader.GetVal<long>("PeriodTo"),
-                            PeriodType = reader.GetVal<int?>("PeriodType"),
-                            PromotionType = reader.GetVal<int>("PromotionType"),
-                            RedeemHours = reader.GetVal<int?>("RedeemHours"),
-                            SiteId = reader.GetVal<int>("SiteId"),
-                            Sort = reader.GetVal<int>("Sort"),
-                            SpecialCode = reader.GetVal<string>("SpecialCode"),
-                            StartDate = Convert.ToDateTime(reader["StartDate"]),
-                            Status = reader.GetVal<int>("Status"),
-                            TpId = reader.GetVal<int?>("TpId"),
-                            WalletType = reader.GetVal<int?>("WalletType")
-                        });
-                    }
-                    return promos;
-                }
-            }
+            var criteria = new GetPromotionCriteria(fromDate, toDate);
+            return await _dynamicRepository.FetchAsync<Promotion>(criteria);
         }
     }
 }

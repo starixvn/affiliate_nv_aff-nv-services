@@ -4,8 +4,6 @@ using Affiliate.N88.WebApi.Extensions;
 using Affiliate.N88.WebApi.Infastructure.Enums;
 using Affiliate.N88.WebApi.Models.HelthCheck;
 using Fanex.Data.Repository;
-using System;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.WebApi.Health
 {

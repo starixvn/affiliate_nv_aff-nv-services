@@ -16,27 +16,27 @@ namespace Affiliate.N88.WebApi.Controllers
             Repo = repo;
         }
 
-        [HttpGet]
+        [HttpGet("GetRebateMLogs")]
         public async Task<ActionResult<IEnumerable<RebateMLogModel>>> GetRebateMLogs(DateTime fromDate, DateTime toDate)
             => Ok(await Repo.FetchAsync<RebateMLogModel>(new GetRebateMLogCriteria(fromDate, toDate)));
 
-        [HttpGet]
+        [HttpGet("GetDrawLogs")]
         public async Task<ActionResult<IEnumerable<DrawLogInfo>>> GetDrawLogs(int id, int batchCount = 2000)
             => Ok(await Repo.FetchAsync<DrawLogInfo>(new GetDrawLogCritearia(id, batchCount)));
 
-        [HttpGet]
+        [HttpGet("GetEventDraws")]
         public async Task<ActionResult<IEnumerable<EventDrawInfo>>> GetEventDraws(int id, int batchCount = 2000)
             => Ok(await Repo.FetchAsync<EventDrawInfo>(new GetEventDrawCritearia(id, batchCount)));
 
-        [HttpGet]
+        [HttpGet("GetLogAdminAdjustWallet")]
         public async Task<ActionResult<IEnumerable<LogAdminAjustWalletInfo>>> GetLogAdminAdjustWallet(int id, int batchCount = 2000)
             => Ok(await Repo.FetchAsync<LogAdminAjustWalletInfo>(new GetLogAdminAjustWalletCriteria(id, batchCount)));
 
-        [HttpGet]
+        [HttpGet("GetReferralMLogs")]
         public async Task<ActionResult<IEnumerable<ReferralMLogModel>>> GetReferralMLogs(int id, int batchCount = 2000)
             => Ok(await Repo.FetchAsync<ReferralMLogModel>(new GetReferralMLogCriteria(id, batchCount)));
 
-        [HttpGet]
+        [HttpGet("GetReferralLogs")]
         public async Task<ActionResult<IEnumerable<ReferralLogModel>>> GetReferralLogs(int id, int batchCount = 2000)
             => Ok(await Repo.FetchAsync<ReferralLogModel>(new GetReferralLogCriteria(id, batchCount)));
     }

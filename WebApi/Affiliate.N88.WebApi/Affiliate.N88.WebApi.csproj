@@ -10,14 +10,15 @@
 
   <ItemGroup>
     <PackageReference Include="Fanex.Data" Version="4.3.4.5" />
+    <PackageReference Include="Fanex.Data.Repository" Version="4.3.4.5" />
     <PackageReference Include="Fanex.Data.MySql" Version="4.3.4.5" />
-    <PackageReference Include="Fanex.Logging" Version="2.0.1" />
-    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
-    <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="1.0.1" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.2" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="2.0.2.1" />
+    <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="SharpRaven" Version="2.4.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>

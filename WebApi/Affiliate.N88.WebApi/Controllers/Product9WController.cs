@@ -18,7 +18,7 @@ namespace Affiliate.N88.WebApi.Controllers
             this.dynamicRepository = dynamicRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetTpReport")]
         public async Task<ActionResult<IEnumerable<TpReport9W>>> GetTpReport([FromQuery] BatchCountParam param)
             => Ok(await dynamicRepository.FetchAsync<TpReport9W>(new GetTpReport9WCriteria
             {
@@ -28,7 +28,7 @@ namespace Affiliate.N88.WebApi.Controllers
                 BatchCount = param.BatchCount
             }));
 
-        [HttpGet]
+        [HttpGet("GetTpWager")]
         public async Task<ActionResult<IEnumerable<TpWager9W>>> GetTpWager([FromQuery] BatchCountParam param)
             => Ok(await dynamicRepository.FetchAsync<TpWager9W>(new GetTpWager9WCriteria
             {

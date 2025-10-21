@@ -17,11 +17,11 @@ namespace Affiliate.N88.WebApi.Controllers
             DynamicRepo = dynamicRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetPromotions")]
         public async Task<ActionResult<IEnumerable<PromotionModel>>> GetPromotions(DateTime fromDate, DateTime toDate)
             => Ok(await DynamicRepo.FetchAsync<PromotionModel>(new GetPromotionCriteria(fromDate, toDate)));
 
-        [HttpGet]
+        [HttpGet("GetPromotionSpecifics")]
         public async Task<ActionResult<IEnumerable<PromotionSpecificModel>>> GetPromotionSpecifics(DateTime fromDate, DateTime toDate)
             => Ok(await DynamicRepo.FetchAsync<PromotionSpecificModel>(new GetPromotionSpecificCriteria(fromDate, toDate)));
     }
