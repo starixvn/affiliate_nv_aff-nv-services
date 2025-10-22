@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +14,13 @@ namespace Affiliate.N88.Models
 
         public int CurrencyId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int SiteId { get; set; }
 
         public decimal ReferralAmount { get; set; }
 
-        public string Memo { get; set; }
+        public string? Memo { get; set; }
 
         public long RelId { get; set; }
 

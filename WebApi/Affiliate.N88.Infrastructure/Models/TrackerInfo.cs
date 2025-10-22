@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Affiliate.N88.Models
 {
@@ -6,7 +6,7 @@ namespace Affiliate.N88.Models
     {
         public DateTime CalledTime { get; set; }
 
-        public string KeyValue { get; set; }
+        public string? KeyValue { get; set; }
 
         public bool IsReset { get; set; }
     }

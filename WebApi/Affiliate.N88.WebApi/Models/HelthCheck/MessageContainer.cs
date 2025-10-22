@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace Affiliate.N88.WebApi.Models.HelthCheck
 {
@@ -27,12 +27,12 @@ namespace Affiliate.N88.WebApi.Models.HelthCheck
         /// <summary>
         /// Gets or sets the info message.
         /// </summary>
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         /// <summary>
         /// Gets or sets an object with additional info for the health check provider point.
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] // See https://www.newtonsoft.com/json/help/html/JsonPropertyPropertyLevelSetting.htm
-        public object AdditionalInfo { get; set; }
+        public object? AdditionalInfo { get; set; }
     }
 }

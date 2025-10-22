@@ -47,7 +47,7 @@ namespace Affiliate.N88.WebApi.Controllers
         [HttpGet("GetLoginCustomerInfo")]
         public async Task<ActionResult<CustomerInfo>> GetLoginCustomerInfo(string userName, int siteId)
         {
-            CustomerInfo cust = null;
+            CustomerInfo? cust = null;
             if (!HasNonASCIIChars(userName))
             {
                 cust = await dynamicRepository.GetAsync<CustomerInfo>(new GetLoginCustInfoCriteria() { UserName = userName, SiteId = siteId });
@@ -62,7 +62,7 @@ namespace Affiliate.N88.WebApi.Controllers
             return Ok(infos.Select(i => new CustRegModel
             {
                 CustId = i.CustId,
-                RegTime = DateTimeOffset.Parse(i.RegTime),
+                RegTime = DateTimeOffset.Parse(i.RegTime ?? string.Empty),
                 SignUpUrl = i.SignUpUrl,
                 SiteId = i.SiteId
             }));
@@ -79,11 +79,11 @@ namespace Affiliate.N88.WebApi.Controllers
                 Amount = payment.Amount,
                 AfterAmount = 0,
                 CustId = payment.CustId,
-                Memo = payment.Memo,
-                RefTransId = payment.RefTransId,
+                Memo = payment.Memo ?? string.Empty,
+                RefTransId = payment.RefTransId ?? string.Empty,
                 SiteId = payment.SiteId,
                 Type = payment.Type,
-                UserName = payment.UserName
+                UserName = payment.UserName ?? string.Empty
             };
 
             await dynamicRepository.ExecuteAsync(criteria);
@@ -129,8 +129,8 @@ namespace Affiliate.N88.WebApi.Controllers
                 await dynamicRepository.ExecuteAsync(new InsertAffiliateInfoCommand
                 {
                     AffiliateId = affiliate.AffiliateId,
-                    AffiliateCode = affiliate.AffiliateCode,
-                    AffiliateName = affiliate.AffiliateName,
+                    AffiliateCode = affiliate.AffiliateCode ?? string.Empty,
+                    AffiliateName = affiliate.AffiliateName ?? string.Empty,
                     CustId = affiliate.CustId == 0 ? _Marketing_Cust_ID : affiliate.CustId,
                     ParentAffiliate = affiliate.ParentAffiliate ?? string.Empty,
                     SiteId = affiliate.SiteId,
@@ -218,7 +218,7 @@ namespace Affiliate.N88.WebApi.Controllers
         private string GetIpAddress()
         {
             var httpContext = HttpContext;
-            string ipAddress = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            string? ipAddress = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
 
             if (!string.IsNullOrEmpty(ipAddress))
             {

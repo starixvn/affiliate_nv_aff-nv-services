@@ -10,16 +10,16 @@ namespace Affiliate.N88.DTO
         { }
 
         [SpParam(Ignored = true)]
-        public string SettingPrefix { get; set; }
+        public string? SettingPrefix { get; set; }
 
         [SpParam(Ignored = true)]
-        public string SiteName { get; set; }
+        public string? SiteName { get; set; }
 
-        public string XmlData { get; set; }
+        public string? XmlData { get; set; }
 
         public int ErrCode { get; set; }
 
-        public string ErrMsg { get; set; }
+        public string? ErrMsg { get; set; }
 
         protected override string SuffixSettingKey => "Task_Aff_MemberInfo_Import";
 

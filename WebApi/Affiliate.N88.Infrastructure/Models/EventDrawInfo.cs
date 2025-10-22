@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ namespace Affiliate.N88.Models
     {
         public int EventId { get; set; }
 
-        public string EventName { get; set; }
+        public string? EventName { get; set; }
 
         public int SiteId { get; set; }
 
@@ -20,11 +20,11 @@ namespace Affiliate.N88.Models
 
         public DateTime EndTime { get; set; }
 
-        public string TimeZone { get; set; }
+        public string? TimeZone { get; set; }
 
         public DateTime? ResetDate { get; set; }
 
-        public string ConditionSP { get; set; }
+        public string? ConditionSP { get; set; }
 
         public DateTime CreateDate { get; set; }
 

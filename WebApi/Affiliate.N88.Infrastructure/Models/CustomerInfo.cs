@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Affiliate.N88.Models
 {
@@ -8,17 +8,17 @@ namespace Affiliate.N88.Models
 
         public int? SiteId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int? CurrencyId { get; set; }
 
-        public string UserLang { get; set; }
+        public string? UserLang { get; set; }
 
         public int? ActStatus { get; set; }
 
         public int? AgentId { get; set; }
 
-        public string AllAgentId { get; set; }
+        public string? AllAgentId { get; set; }
 
         public int? UserLevel { get; set; }
 

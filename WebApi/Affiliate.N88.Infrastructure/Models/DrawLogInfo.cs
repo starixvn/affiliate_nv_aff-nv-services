@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +16,7 @@ namespace Affiliate.N88.Models
 
         public int PrizeId { get; set; }
 
-        public string PrizeName { get; set; }
+        public string? PrizeName { get; set; }
 
         public Decimal Amount { get; set; }
 

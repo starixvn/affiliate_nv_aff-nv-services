@@ -9,7 +9,7 @@ namespace Affiliate.N88.DTO
         {
         }
 
-        public virtual string SName { get; set; }
+        public virtual string? SName { get; set; }
 
         protected override string SuffixSettingKey => "Task_Aff_GetSetting";
 

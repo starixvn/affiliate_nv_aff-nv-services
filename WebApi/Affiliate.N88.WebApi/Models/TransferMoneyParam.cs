@@ -1,10 +1,10 @@
-﻿namespace Affiliate.N88.WebApi.Models
+namespace Affiliate.N88.WebApi.Models
 {
     public class TransferMoneyParam
     {
         public int SiteId { get; set; }
 
-        public string RefTransId { get; set; }
+        public string? RefTransId { get; set; }
 
         public int FromCustId { get; set; }
 

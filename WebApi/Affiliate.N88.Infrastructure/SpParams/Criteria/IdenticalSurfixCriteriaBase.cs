@@ -1,13 +1,13 @@
-﻿using Affiliate.N88.Core;
+using Affiliate.N88.Core;
 using Fanex.Data.Repository;
 
 namespace Affiliate.N88.SpParams.Criteria
 {
     public abstract class IdenticalSurfixCriteriaBase : CriteriaBase
     {
-        protected readonly IPrefixProvider _prefixProvider;
+        protected readonly IPrefixProvider? _prefixProvider;
 
-        protected IdenticalSurfixCriteriaBase(IPrefixProvider prefixProvider = null)
+        protected IdenticalSurfixCriteriaBase(IPrefixProvider? prefixProvider = null)
             => _prefixProvider = prefixProvider;
         
         protected abstract string SuffixSettingKey { get; }

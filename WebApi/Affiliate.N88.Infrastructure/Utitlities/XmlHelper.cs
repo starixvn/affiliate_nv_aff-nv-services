@@ -12,6 +12,8 @@ namespace Affiliate.N88.Utitlities
         {
             var xmlDoc = new XDocument(new XElement(rootName));
             var root = xmlDoc.Root;
+            if (root == null) throw new InvalidOperationException("XML root is null");
+            
             foreach (var item in data)
             {
                 if (item == null)
@@ -33,7 +35,8 @@ namespace Affiliate.N88.Utitlities
             foreach (var prop in props)
             {
                 var propName = prop.Name;
-                var value = type.GetProperty(propName).GetValue(item, null) ?? "";
+                var propInfo = type.GetProperty(propName);
+                var value = propInfo?.GetValue(item, null) ?? "";
                 elem.Add(new XAttribute(propName.ToLowerInvariant(), value));
             }
         }

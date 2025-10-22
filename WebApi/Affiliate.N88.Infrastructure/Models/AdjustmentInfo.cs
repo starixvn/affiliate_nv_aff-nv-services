@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +10,19 @@ namespace Affiliate.N88.Models
     {
         public int AdjustId { get; set; }
 
-        public string TransId { get; set; }
+        public string? TransId { get; set; }
 
         public int AdjustType { get; set; }
 
         public int CustId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int CurrencyId { get; set; }
 
         public int SiteId { get; set; }
 
-        public string AdjustIdInfo { get; set; }
+        public string? AdjustIdInfo { get; set; }
 
         public decimal Amount { get; set; }
 
@@ -30,11 +30,11 @@ namespace Affiliate.N88.Models
 
         public bool FirstDeposit { get; set; }
 
-        public string RefId { get; set; }
+        public string? RefId { get; set; }
 
-        public string Memo { get; set; }
+        public string? Memo { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         public int Status { get; set; }
     }

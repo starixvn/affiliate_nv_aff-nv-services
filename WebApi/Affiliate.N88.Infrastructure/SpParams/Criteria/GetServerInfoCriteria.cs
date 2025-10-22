@@ -1,4 +1,4 @@
-﻿using Fanex.Data.Repository;
+using Fanex.Data.Repository;
 
 namespace Affiliate.N88.SpParams.Criteria
 {
@@ -6,9 +6,9 @@ namespace Affiliate.N88.SpParams.Criteria
     {
         private const string SP_NAME = "N88_Get_ServerInfo";
 
-        private string Prefix { get; }
+        private string? Prefix { get; }
 
-        public GetServerInfoCriteria(string prefix = null)
+        public GetServerInfoCriteria(string? prefix = null)
         {
             Prefix = prefix;
         }

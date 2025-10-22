@@ -42,7 +42,7 @@ namespace Affiliate.N88.WebApi.Filters
             if (request.Headers.Authorization.Count > 0)
             {
                 var authHeader = request.Headers.Authorization.First();
-                if (authHeader.StartsWith(TokenAuthenticationScheme + " "))
+                if (authHeader != null && authHeader.StartsWith(TokenAuthenticationScheme + " "))
                 {
                     var rawAuthzHeader = authHeader.Substring(TokenAuthenticationScheme.Length + 1);
                     var autherizationHeaderArray = GetAutherizationHeaderValues(rawAuthzHeader);
@@ -82,7 +82,7 @@ namespace Affiliate.N88.WebApi.Filters
             context.Result = new UnauthorizedObjectResult("Request is not authenticated");
         }
 
-        private string[] GetAutherizationHeaderValues(string rawAuthzHeader)
+        private string[]? GetAutherizationHeaderValues(string rawAuthzHeader)
         {
             var credArray = rawAuthzHeader.Split(':');
 

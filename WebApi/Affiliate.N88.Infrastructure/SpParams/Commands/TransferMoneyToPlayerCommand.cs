@@ -15,7 +15,7 @@ namespace Affiliate.N88.SpParams.Commands
 
         public int SiteId { get; set; }
 
-        public string RefTransId { get; set; }
+        public string? RefTransId { get; set; }
 
         public int FromCustId { get; set; }
 

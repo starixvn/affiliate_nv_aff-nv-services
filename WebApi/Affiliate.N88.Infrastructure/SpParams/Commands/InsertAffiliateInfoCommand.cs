@@ -15,31 +15,31 @@ namespace Affiliate.N88.SpParams.Commands
         public int AffiliateId { get; set; }
 
         [SpParam(SqlParamName = "_AffiliateName")]
-        public string AffiliateName { get; set; }
+        public string? AffiliateName { get; set; }
 
         [SpParam(SqlParamName = "_ParentAffiliate")]
-        public string ParentAffiliate { get; set; }
+        public string? ParentAffiliate { get; set; }
 
         [SpParam(SqlParamName = "_AffiliateCode")]
-        public string AffiliateCode { get; set; }
+        public string? AffiliateCode { get; set; }
 
         [SpParam(SqlParamName = "_UserName")]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         [SpParam(SqlParamName = "_FirstName")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [SpParam(SqlParamName = "_LastName")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [SpParam(SqlParamName = "_ContactNumber")]
-        public string ContactNumber { get; set; }
+        public string? ContactNumber { get; set; }
 
         [SpParam(SqlParamName = "_Email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [SpParam(SqlParamName = "_Status")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         public override string GetSettingKey() => "Affiliate_AffiliateInfo_Set";
 

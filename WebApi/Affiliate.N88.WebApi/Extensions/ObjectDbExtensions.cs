@@ -9,9 +9,11 @@ namespace Affiliate.N88.WebApi.Extensions
         {
             if(IsNullable(typeof(T)))
             {
-                return reader[rowName] == DBNull.Value ? default(T) : (T)Convert.ChangeType(reader[rowName], Nullable.GetUnderlyingType(typeof(T)));
+                var underlyingType = Nullable.GetUnderlyingType(typeof(T));
+                if (underlyingType == null) return default(T)!;
+                return reader[rowName] == DBNull.Value ? default(T)! : (T)Convert.ChangeType(reader[rowName], underlyingType);
             }
-            return reader[rowName] == DBNull.Value ? default(T) : (T)Convert.ChangeType(reader[rowName], typeof(T));
+            return reader[rowName] == DBNull.Value ? default(T)! : (T)Convert.ChangeType(reader[rowName], typeof(T));
         }
 
         private static bool IsNullable(Type type) => Nullable.GetUnderlyingType(type) != null;

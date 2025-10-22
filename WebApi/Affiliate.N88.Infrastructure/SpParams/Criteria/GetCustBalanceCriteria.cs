@@ -1,4 +1,4 @@
-﻿using Fanex.Data.Repository;
+using Fanex.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,6 @@ namespace Affiliate.N88.SpParams.Criteria
 
         public override bool IsValid() => true;
 
-        public string CustIdList { get; set; }
+        public string? CustIdList { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Fanex.Data.Repository;
+using Fanex.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Affiliate.N88.SpParams.Criteria
 {
     public class GetVipUpgradeReviewCriteria : CriteriaBase
     {
-        public string MonthDate { get; set; }
+        public string? MonthDate { get; set; }
 
         public int PageIndex { get; set; }
 

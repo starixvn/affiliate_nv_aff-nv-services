@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ namespace Affiliate.N88.Models
     {
         public int CustId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int SiteId { get; set; }
 
@@ -18,8 +18,8 @@ namespace Affiliate.N88.Models
 
         public int Type { get; set; }
 
-        public string Memo { get; set; }
+        public string? Memo { get; set; }
 
-        public string RefTransId { get; set; }
+        public string? RefTransId { get; set; }
     }
 }

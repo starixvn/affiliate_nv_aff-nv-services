@@ -6,7 +6,7 @@ namespace Affiliate.N88.SpParams.Commands
 {
     public abstract class IdenticalSuffixNonQueryCommand : IdenticalSurfixCriteriaBase, INonQueryCommand
     {
-        protected IdenticalSuffixNonQueryCommand(IPrefixProvider prefixProvider = null) : base(prefixProvider)
+        protected IdenticalSuffixNonQueryCommand(IPrefixProvider? prefixProvider = null) : base(prefixProvider)
         {
         }
     }

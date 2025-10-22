@@ -1,4 +1,4 @@
-﻿using Fanex.Data;
+using Fanex.Data;
 using Fanex.Data.Repository;
 using System;
 
@@ -8,9 +8,9 @@ namespace Affiliate.N88.SpParams.Criteria
     {
         private const string SP_NAME = "Aff_CustomerSel";
 
-        private string Prefix { get; }
+        private string? Prefix { get; }
 
-        public GetAffCustomersCriteria(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize, string prefix = null)
+        public GetAffCustomersCriteria(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize, string? prefix = null)
         {
             Prefix = prefix;
             FromDate = fromDate;

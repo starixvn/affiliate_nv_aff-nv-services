@@ -8,7 +8,7 @@ namespace Affiliate.N88.Comparer
 {
     public class StringToIntComparer : IComparer<string>
     {
-        public int Compare(string x, string y)
+        public int Compare(string? x, string? y)
         {
             var xInt = Convert.ToInt32(x);
             var yInt = Convert.ToInt32(y);

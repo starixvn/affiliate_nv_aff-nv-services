@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +10,9 @@ namespace Affiliate.N88.Models
     {
         public int CustId { get; set; }
 
-        public string CalculateMonth { get; set; }
+        public string? CalculateMonth { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int SiteId { get; set; }
 
@@ -34,6 +34,6 @@ namespace Affiliate.N88.Models
 
         public DateTime SettleTime { get; set; }
 
-        public string LastUpdateUser { get; set; }
+        public string? LastUpdateUser { get; set; }
     }
 }
