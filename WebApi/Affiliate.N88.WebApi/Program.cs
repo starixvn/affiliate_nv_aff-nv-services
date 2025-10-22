@@ -17,7 +17,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Affiliate N88 API",
+        Version = "v1",
+        Description = "API for Affiliate N88 Services"
+    });
+    
+    // Handle multiple actions with same HTTP method
+    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+});
 builder.Services.AddMemoryCache();
 
 // Global filters & JSON
@@ -57,12 +68,8 @@ RegisterHealthCheck(builder.Services);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

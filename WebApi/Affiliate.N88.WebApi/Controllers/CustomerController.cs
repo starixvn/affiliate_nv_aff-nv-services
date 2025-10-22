@@ -68,7 +68,7 @@ namespace Affiliate.N88.WebApi.Controllers
             }));
         }
 
-        [HttpPost]
+        [HttpPost("UpdateCustomerWallet")]
         public async Task<ActionResult<decimal>> UpdateCustomerWallet(PaymentRequestInfo payment)
         {
             await LogService.InfoAsync($"Recevice update wallet request\n" +
@@ -99,7 +99,7 @@ namespace Affiliate.N88.WebApi.Controllers
         public async Task<ActionResult<IEnumerable<CustClosingBalanceModel>>> GetCustClosingBalance(DateTime lastGetTime, int pageIndex, int pageSize = 2000)
             => Ok(await dynamicRepository.FetchAsync<CustClosingBalanceModel>(new GetCustClosingBalanceCriteria(lastGetTime, pageIndex, pageSize)));
 
-        [HttpPost]
+        [HttpPost("UnlockUser")]
         public async Task<ActionResult<ResultInfo>> UnlockUser(int[] userIds)
         {
             try
@@ -121,7 +121,7 @@ namespace Affiliate.N88.WebApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("InsertAffiliateInfo")]
         public async Task<ActionResult<ResultInfo>> InsertAffiliateInfo(AffiliateInfoParam affiliate)
         {
             try
@@ -172,7 +172,7 @@ namespace Affiliate.N88.WebApi.Controllers
             }));
         }
 
-        [HttpPost]
+        [HttpPost("TransferMoneyToPlayer")]
         public async Task<ActionResult<ResultInfo>> TransferMoneyToPlayer(TransferMoneyParam param)
         {
             await LogService.InfoAsync($"Receive transfer money request\n" +

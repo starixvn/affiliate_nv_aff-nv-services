@@ -20,7 +20,7 @@ namespace Affiliate.N88.WebApi.Controllers
             this.configuration = configuration;
         }
 
-        [HttpGet]
+        [HttpGet("Index")]
         public async Task<ActionResult> Index()
         {
             var connectedMessage = "Database connects successfully";

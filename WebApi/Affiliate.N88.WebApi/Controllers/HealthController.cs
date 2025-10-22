@@ -17,7 +17,7 @@ namespace Affiliate.N88.WebApi.Controllers
             HealthCheckProviders = healthCheckProviders;
         }
 
-        [HttpGet]
+        [HttpGet("Index")]
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {

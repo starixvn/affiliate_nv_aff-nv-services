@@ -9,7 +9,7 @@ namespace Affiliate.N88.WebApi.Controllers
     public class FakeController : ControllerBase
     {
 
-        [HttpPost]
+        [HttpPost("SetCustActStatus")]
         public ActionResult<SetAccountResult> SetCustActStatus(AccountParam param)
         {
             return Ok(new SetAccountResult
