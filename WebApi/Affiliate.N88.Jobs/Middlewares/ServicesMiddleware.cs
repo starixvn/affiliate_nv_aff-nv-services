@@ -1,9 +1,13 @@
-﻿using Affiliate.N88.Helpers;
+﻿using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Affiliate.N88.Helpers;
 using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Fanex.Data;
+using Fanex.Data.MySql;
 using Fanex.Data.Repository;
-using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;
 using Microsoft.AspNetCore.Builder;
@@ -18,12 +22,6 @@ using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
 using Refit;
 using SharpRaven;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace Affiliate.N88.Jobs.Middlewares
 {
@@ -55,17 +53,10 @@ namespace Affiliate.N88.Jobs.Middlewares
 
         public static void InitFanexData(IConfiguration configuration)
         {
-            var listConnectionName = configuration.GetSection("ConnectionStrings").GetChildren().Select(_ => _.Key);
-            var connectionStrings = new Dictionary<string, ConnectionConfiguration>(listConnectionName
-                .Select(connectionName => new KeyValuePair<string, ConnectionConfiguration>(connectionName,
-                    new ConnectionConfiguration(connectionName, configuration.GetConnectionString(connectionName)))
-                ));
-
-            DbSettingProviderManager
-                .StartNewSession()
-                .WithSqlServer(configuration)
-                .Use(connectionStrings)
-                .Run();
+            DbSettingProviderManager.StartNewSession()
+            .WithMySql(configuration)
+            .UseDefaultDbSettingProvider("App_Data/SpNames.xml", true)
+            .Run();
         }
 
         private static void InitApi(IServiceCollection services)
