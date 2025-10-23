@@ -23,7 +23,6 @@ namespace Affiliate.N88.Jobs.RecurringTasks
         private readonly ILogger _logger;
         private readonly ITrackerService _trackerService;
 
-        private const int MAX_ROW_COUNT = 2000;
 
         public FetchTpTransferInfoDataTask(IThirdPartyImportRepository thirdPartyImportRepository
             , ILicenseeApi licenseeApi
@@ -42,7 +41,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             var tracker = await _trackerService.GetTrackerAsync(TableName, t => t.CalledTime);
             var id = string.IsNullOrWhiteSpace(tracker.KeyValue) ? 0 : int.Parse(tracker.KeyValue);
             var queryId = GetAdjustmentId(id);
-            var data = await _licenseeApi.GetTpTransferInfo(queryId, MAX_ROW_COUNT);
+            var data = await _licenseeApi.GetTpTransferInfo(queryId, SettingConstant.MAX_ROW_COUNT);
 
             await ImportDataAsync(data);
         }
@@ -61,9 +60,9 @@ namespace Affiliate.N88.Jobs.RecurringTasks
                         KeyValue = maxId.ToString()
                     });
 
-                if(importData.Count() == MAX_ROW_COUNT)
+                if(importData.Count() == SettingConstant.MAX_ROW_COUNT)
                 {
-                    importData = await _licenseeApi.GetTpTransferInfo(maxId, MAX_ROW_COUNT);
+                    importData = await _licenseeApi.GetTpTransferInfo(maxId, SettingConstant.MAX_ROW_COUNT);
                 }
                 else
                 {

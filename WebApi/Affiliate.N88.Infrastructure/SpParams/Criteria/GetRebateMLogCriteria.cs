@@ -1,5 +1,4 @@
 using Fanex.Data.Repository;
-using System;
 
 namespace Affiliate.N88.SpParams.Criteria
 {

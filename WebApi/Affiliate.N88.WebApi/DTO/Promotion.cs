@@ -1,5 +1,3 @@
-using System;
-
 namespace Affiliate.N88.WebApi.DTO
 {
     public class Promotion

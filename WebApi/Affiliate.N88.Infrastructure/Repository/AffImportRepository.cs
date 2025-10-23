@@ -2,8 +2,6 @@
 using Affiliate.N88.Exceptions;
 using Affiliate.N88.SpParams.Commands;
 using Fanex.Data.Repository;
-using System;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.Repository
 {

@@ -21,7 +21,6 @@ namespace Affiliate.N88.Jobs.RecurringTasks.AffCustomer
 {
     public class BaseAffCustomerDataTask
     {
-        protected const int BATCH_COUNT = 2000;
         protected virtual bool IsNeedRealData => false;
 
         protected readonly IAffMemberRepository _affMemberRepository;
@@ -120,7 +119,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.AffCustomer
         {
             var lastDateRange = dateRanges.LastOrDefault();
 
-            if (lastDateRange.ToDate != default(DateTime))
+            if (lastDateRange.ToDate != DateTime.MinValue)
             {
                 await HandleImportDataAsync(lastDateRange.ToDate, apiServerNow.AddSeconds(-5));
             }
@@ -131,7 +130,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.AffCustomer
             int pageIndex = 0;
             while (true)
             {
-                var data = await _licenseeApi.GetAffCustomerAsync(fromDate, toDate, pageIndex, BATCH_COUNT);
+                var data = await _licenseeApi.GetAffCustomerAsync(fromDate, toDate, pageIndex, SettingConstant.MAX_ROW_COUNT);
                 if (!data.Any())
                 {
                     break;
@@ -151,7 +150,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.AffCustomer
                 }
 
                 pageIndex++;
-                if (data.Count() < BATCH_COUNT)
+                if (data.Count() < SettingConstant.MAX_ROW_COUNT)
                 {
                     break;
                 }

@@ -46,7 +46,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             var emailTrackerTime = await ImportAndGetEmailRewardTrackTime(fromDate);
             var phoneTrackeTime = await ImportAndGetPhoneRewardTrackTime(fromDate);
             var minTrackerTime = emailTrackerTime <= phoneTrackeTime ? emailTrackerTime : phoneTrackeTime;
-            if (minTrackerTime != default(DateTime))
+            if (minTrackerTime != DateTime.MinValue)
             {
                 await _timeTrackerService.SaveTrackerAsync(TableName, new TrackerInfo
                 {
@@ -66,8 +66,8 @@ namespace Affiliate.N88.Jobs.RecurringTasks
         {
             var queryDate = fromDate;
             var isFirstTimeQuery = true;
-            DateTime trackerDate = default(DateTime);
-            var data = new List<CustVerificationReward>().AsEnumerable();
+            DateTime trackerDate = DateTime.MinValue;
+            var data = Enumerable.Empty<CustVerificationReward>();
             while (isFirstTimeQuery || data.Count() == MAX_BATCH_COUNT)
             {
                 isFirstTimeQuery = false;

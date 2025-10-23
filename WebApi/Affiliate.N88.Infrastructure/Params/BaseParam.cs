@@ -1,5 +1,3 @@
-using System;
-
 namespace Affiliate.N88.Params
 {
     public class BaseParam

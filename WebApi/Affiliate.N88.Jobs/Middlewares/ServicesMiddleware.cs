@@ -6,8 +6,8 @@ using Affiliate.N88.Helpers;
 using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Fanex.Data;
-using Fanex.Data.MySql;
 using Fanex.Data.Repository;
+using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;
 using Microsoft.AspNetCore.Builder;
@@ -54,7 +54,7 @@ namespace Affiliate.N88.Jobs.Middlewares
         public static void InitFanexData(IConfiguration configuration)
         {
             DbSettingProviderManager.StartNewSession()
-            .WithMySql(configuration)
+            .WithSqlServer(configuration)
             .UseDefaultDbSettingProvider("App_Data/SpNames.xml", true)
             .Run();
         }

@@ -1,6 +1,4 @@
 
-using System;
-
 namespace Affiliate.N88.DTO
 {
     public class AffCustomerInfo

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using System.Web;
+﻿using System.Xml.Linq;
 
 namespace Affiliate.N88.Utitlities
 {
@@ -12,7 +9,10 @@ namespace Affiliate.N88.Utitlities
         {
             var xmlDoc = new XDocument(new XElement(rootName));
             var root = xmlDoc.Root;
-            if (root == null) throw new InvalidOperationException("XML root is null");
+            if (root == null)
+            {
+                throw new InvalidOperationException("XML root is null");
+            }
             
             foreach (var item in data)
             {

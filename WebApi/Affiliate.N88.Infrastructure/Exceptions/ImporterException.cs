@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Affiliate.N88.Exceptions
+﻿namespace Affiliate.N88.Exceptions
 {
     public class ImporterException : Exception
     {

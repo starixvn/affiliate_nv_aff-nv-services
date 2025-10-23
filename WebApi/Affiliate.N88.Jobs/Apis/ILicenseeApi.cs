@@ -13,10 +13,10 @@ namespace Affiliate.N88.Jobs.Apis
         Task<string> CheckConnection();
 
         [Get("/customer/GetAffCustomers")]
-        Task<IEnumerable<AffCustomerModel>> GetAffCustomerAsync(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000);
+        Task<IEnumerable<AffCustomerModel>> GetAffCustomerAsync(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize);
 
         [Get("/customer/GetCustomers")]
-        Task<IEnumerable<CustomerInfo>> GetCustomersAsync(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000);
+        Task<IEnumerable<CustomerInfo>> GetCustomersAsync(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize);
 
         [Get("/customer/GetFixedCustomers")]
         Task<IEnumerable<CustomerInfo>> GetFixedCustomers();
@@ -40,7 +40,7 @@ namespace Affiliate.N88.Jobs.Apis
         Task<IEnumerable<TpTransferInfo>> GetTpTransferInfo(int id, int totalRow);
 
         [Get("/betreport/GetDepositInfo")]
-        Task<IEnumerable<DepositInfo>> GetDepositInfo(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000);
+        Task<IEnumerable<DepositInfo>> GetDepositInfo(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize);
 
         [Get("/Customer/GetCustomerRegInfo")]
         Task<IEnumerable<CustRegModel>> GetCustomerRegInfo(long unixTime);
@@ -64,7 +64,7 @@ namespace Affiliate.N88.Jobs.Apis
         Task<IEnumerable<CustClosingBalanceModel>> GetCustClosingBalance(DateTime lastGetTime, int pageIndex, int pageSize);
 
         [Get("/customer/GetCustVerificationRewards")]
-        Task<IEnumerable<CustVerificationReward>> GetCustVerificationRewards(DateTime lastGetTime, string conditionField, int batchCount = 2000);
+        Task<IEnumerable<CustVerificationReward>> GetCustVerificationRewards(DateTime lastGetTime, string conditionField, int batchCount);
 
         [Get("/BetReport/GetAdjustmentInfos")]
         Task<IEnumerable<AdjustmentInfo>> GetAdjustmentInfos(int id, int batchCount);

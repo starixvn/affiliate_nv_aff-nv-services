@@ -1,9 +1,6 @@
 ﻿using Affiliate.N88.WebApi.DTO;
 using Affiliate.N88.SpParams.Criteria;
 using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.WebApi.Repository
 {

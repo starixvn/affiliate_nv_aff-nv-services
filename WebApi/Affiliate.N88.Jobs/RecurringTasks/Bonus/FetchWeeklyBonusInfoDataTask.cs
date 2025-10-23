@@ -49,7 +49,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Bonus
             var isRunFirstTime = true;
             var listData = Enumerable.Empty<BonusDTO>();
             var pageIndex = 0;
-            while(isRunFirstTime || listData.Count() == 2000)
+            while(isRunFirstTime || listData.Count() == SettingConstant.MAX_ROW_COUNT)
             {
                 isRunFirstTime= false;
                 listData = await _licenseeApi.GetBonusInfoByDate(date, pageIndex, SettingConstant.MAX_ROW_COUNT);

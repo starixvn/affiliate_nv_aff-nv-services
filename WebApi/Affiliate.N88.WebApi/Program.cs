@@ -111,14 +111,13 @@ static void InitializeLogging(IConfiguration configuration)
     if (!string.IsNullOrEmpty(backEndDsn))
     {
         LogManager.SetDefaultLogCategory(category).Use(new List<ILogEngine>
-    {
-        new SentryLogging(new SentryEngineOptions
         {
-            Dsn = new Dsn(backEndDsn),
-            Environment = env
-        })
-    });
-
+            new SentryLogging(new SentryEngineOptions
+            {
+                Dsn = new Dsn(backEndDsn),
+                Environment = env
+            })
+        });
     }
 }
 

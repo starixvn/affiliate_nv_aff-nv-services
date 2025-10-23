@@ -1,5 +1,4 @@
 ﻿using Affiliate.N88.Core;
-using System;
 
 namespace Affiliate.N88.SpParams.Commands
 {

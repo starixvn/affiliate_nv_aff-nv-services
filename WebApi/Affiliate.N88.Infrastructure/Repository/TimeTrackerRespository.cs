@@ -2,8 +2,6 @@
 using Affiliate.N88.SpParams.Commands;
 using Affiliate.N88.SpParams.Criteria;
 using Fanex.Data.Repository;
-using System;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.Repository
 {
