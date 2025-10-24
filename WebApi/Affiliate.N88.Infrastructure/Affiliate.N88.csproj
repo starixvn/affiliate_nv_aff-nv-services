@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Include="Fanex.Data" Version="4.3.4.5" />
     <PackageReference Include="Fanex.Data.Repository" Version="4.3.4.5" />
-    <PackageReference Include="Fanex.Data.MySql" Version="4.3.4.5" />
   </ItemGroup>
 
 </Project>

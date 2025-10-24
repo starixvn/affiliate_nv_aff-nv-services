@@ -20,7 +20,13 @@ namespace Affiliate.N88.Models
 
         public string? ConditionSP { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { 
+            get {
+                return CreateTime;
+            } 
+        }
+
+        public DateTime CreateTime { get; set; }
 
         public DateTime UpdateTime { get; set; }
     }

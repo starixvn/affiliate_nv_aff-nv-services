@@ -24,6 +24,6 @@ namespace Affiliate.N88.Models
 
         public DateTime? CreateTime { get; set; }
 
-        public string? ThrirdId { get; set; }
+        public string? ThirdId { get; set; }
     }
 }
