@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.Constants;
 using Affiliate.N88.Models;
@@ -60,7 +61,11 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
             {
                 await HandleImportDataAsync(range.FromDate, range.ToDate);
 
-                var tracker = new TrackerInfo { CalledTime = DateTime.Now, KeyValue = range.ToDate.ToString(Format.DateTimeFormat) };
+                var tracker = new TrackerInfo 
+                { 
+                    CalledTime = DateTimeOffset.Now.DateTime, 
+                    KeyValue = range.ToDate.ToString(Format.DateTimeFormat) 
+                };
                 await _timeTrackerService.SaveTrackerAsync(TableName, tracker);
             }
         }
@@ -69,7 +74,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
         {
             var lastDateRange = dateRanges.LastOrDefault();
 
-            if (lastDateRange.ToDate != DateTime.MinValue)
+            if (lastDateRange.ToDate != DateTimeOffset.MinValue)
             {
                 await HandleImportDataAsync(lastDateRange.ToDate, apiServerNow.AddSeconds(-5));
             }

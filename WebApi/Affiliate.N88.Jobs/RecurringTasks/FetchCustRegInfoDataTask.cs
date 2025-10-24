@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.RecurringTasks.Interfaces;
 using Affiliate.N88.Models;
@@ -51,7 +52,11 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             var toDate = GetAdjustmentTime(data.Max(d => d.RegTime));
             if (data.Any() && toDate != default(DateTimeOffset))
             {
-                var tracker = new TrackerInfo { CalledTime = DateTime.Now, KeyValue = toDate.UtcDateTime.ToString() };
+                var tracker = new TrackerInfo 
+                { 
+                    CalledTime = DateTimeOffset.Now.DateTime, 
+                    KeyValue = toDate.UtcDateTime.ToString(Format.DateTimeFormat)
+                };
                 await _timeTrackerService.SaveTrackerAsync(TableName, tracker);
             }
         }

@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.Constants;
 using Affiliate.N88.Jobs.RecurringTasks.Interfaces;
@@ -47,12 +48,12 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             var toDate = GetAdjustmentTime();
             var data = await _liceseeApi.GetCustomerWalletAsync(fromDate);
             await ImportDataToMultipleRepoAsync(data);
-            var tracker = new TrackerInfo { CalledTime = DateTime.Now, KeyValue = toDate.ToString() };
+            var tracker = new TrackerInfo { CalledTime = DateTimeOffset.Now.DateTime, KeyValue = toDate.ToString(Format.DateTimeFormat) };
             await _trackerService.SaveTrackerAsync(TableName, tracker);
         }
 
         private DateTime GetAdjustmentTime()
-            => DateTime.Now.AddMinutes(Settings.AdjustmentValue);
+            => DateTimeOffset.Now.DateTime.AddMinutes(Settings.AdjustmentValue);
 
         protected override string BuildXml(IEnumerable<CustWalletInfo> data)
             => XmlHelper.BuildXml(data, "root", "row");

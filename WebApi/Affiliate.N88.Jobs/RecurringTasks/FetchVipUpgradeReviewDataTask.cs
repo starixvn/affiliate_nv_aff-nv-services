@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.RecurringTasks.Interfaces;
 using Affiliate.N88.Models;
@@ -71,7 +72,8 @@ namespace Affiliate.N88.Jobs.RecurringTasks
                         await ImportDataToMultipleRepoAsync(data);
                     }
                 }
-                var tracker = new TrackerInfo { CalledTime = DateTime.Now, KeyValue = fromDate.ToString() };
+                var tracker = new TrackerInfo { CalledTime = DateTimeOffset.Now.DateTime, 
+                    KeyValue = fromDate.ToString(Format.DateTimeFormat) };
                 await _timeTrackerService.SaveTrackerAsync(TableName, tracker);
                 fromDate = fromDate.AddMonths(1);
             }
