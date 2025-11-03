@@ -22,7 +22,7 @@ namespace Affiliate.N88.Models
 
         public int Status { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateTime { get; set; }
 
         public DateTime LastUpdateTime { get; set; }
 

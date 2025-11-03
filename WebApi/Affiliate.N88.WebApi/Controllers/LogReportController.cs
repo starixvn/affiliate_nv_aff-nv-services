@@ -30,8 +30,8 @@ namespace Affiliate.N88.WebApi.Controllers
             => Ok(await _repo.FetchAsync<EventDrawInfo>(new GetEventDrawCritearia(id, batchCount)));
 
         [HttpGet("GetLogAdminAdjustWallet")]
-        public async Task<ActionResult<IEnumerable<LogAdminAjustWalletInfo>>> GetLogAdminAdjustWallet(int id, int batchCount = PagingConstants.DefaultBatchCount)
-            => Ok(await _repo.FetchAsync<LogAdminAjustWalletInfo>(new GetLogAdminAjustWalletCriteria(id, batchCount)));
+        public async Task<ActionResult<IEnumerable<LogAdminAdjustWalletInfo>>> GetLogAdminAdjustWallet(int id, int batchCount = PagingConstants.DefaultBatchCount)
+            => Ok(await _repo.FetchAsync<LogAdminAdjustWalletInfo>(new GetLogAdminAdjustWalletCriteria(id, batchCount)));
 
         [HttpGet("GetReferralMLogs")]
         public async Task<ActionResult<IEnumerable<ReferralMLogModel>>> GetReferralMLogs(int id, int batchCount = PagingConstants.DefaultBatchCount)

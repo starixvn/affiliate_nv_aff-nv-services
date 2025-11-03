@@ -132,18 +132,18 @@ static void InitializeFanexData(IConfiguration configuration)
 // Extension method for health check registration
 static void RegisterHealthCheck(IServiceCollection services)
 {
-    const int masterSortOrder = 20;
-    const int slaveSortOrder = 21;
+    const int MasterSortOrder = 20;
+    const int SlaveSortOrder = 21;
     
     services.AddScoped<IHealthCheckProvider>(provider =>
     {
         var repo = provider.GetRequiredService<IDynamicRepository>();
-        return new DatabaseHealthCheckProvider(repo, Affiliate.N88.WebApi.Infastructure.Enums.DatabaseServerType.Master, masterSortOrder);
+        return new DatabaseHealthCheckProvider(repo, Affiliate.N88.WebApi.Infrastructure.Enums.DatabaseServerType.Master, MasterSortOrder);
     });
     
     services.AddScoped<IHealthCheckProvider>(provider =>
     {
         var repo = provider.GetRequiredService<IDynamicRepository>();
-        return new DatabaseHealthCheckProvider(repo, Affiliate.N88.WebApi.Infastructure.Enums.DatabaseServerType.Slave, slaveSortOrder);
+        return new DatabaseHealthCheckProvider(repo, Affiliate.N88.WebApi.Infrastructure.Enums.DatabaseServerType.Slave, SlaveSortOrder);
     });
 }

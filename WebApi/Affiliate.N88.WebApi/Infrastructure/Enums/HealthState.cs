@@ -1,4 +1,4 @@
-﻿namespace Affiliate.N88.WebApi.Infastructure.Enums
+namespace Affiliate.N88.WebApi.Infrastructure.Enums
 {
     public enum HealthState
     {
@@ -7,3 +7,5 @@
         Unhealthy
     }
 }
+
+

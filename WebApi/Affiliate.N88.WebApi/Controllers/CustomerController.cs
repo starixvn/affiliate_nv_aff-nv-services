@@ -74,9 +74,9 @@ namespace Affiliate.N88.WebApi.Controllers
         [HttpPost("UpdateCustomerWallet")]
         public async Task<ActionResult<decimal>> UpdateCustomerWallet(PaymentRequestInfo payment)
         {
-            await LogService.InfoAsync($"Recevice update wallet request\n" +
+            await LogService.InfoAsync($"Receive update wallet request\n" +
                 $"Param: {JsonConvert.SerializeObject(payment)}\n" +
-                $"RequestIp: ${GetIpAddress()}");
+                $"RequestIp: {GetIpAddress()}");
             var criteria = new UpdateCustomerWalletCommand
             {
                 Amount = payment.Amount,
@@ -99,7 +99,7 @@ namespace Affiliate.N88.WebApi.Controllers
             => Ok(await _dynamicRepository.FetchAsync<CustBonusRolloverModel>(new GetCustBonusRolloverCriteria(id, batchCount)));
 
         [HttpGet("GetCustClosingBalance")]
-        public async Task<ActionResult<IEnumerable<CustClosingBalanceModel>>> GetCustClosingBalance(DateTime lastGetTime, int pageIndex, int pageSize = 2000)
+        public async Task<ActionResult<IEnumerable<CustClosingBalanceModel>>> GetCustClosingBalance(DateTime lastGetTime, int pageIndex, int pageSize = PagingConstants.DefaultPageSize)
             => Ok(await _dynamicRepository.FetchAsync<CustClosingBalanceModel>(new GetCustClosingBalanceCriteria(lastGetTime, pageIndex, pageSize)));
 
         [HttpPost("UnlockUser")]
@@ -180,7 +180,7 @@ namespace Affiliate.N88.WebApi.Controllers
         {
             await LogService.InfoAsync($"Receive transfer money request\n" +
                 $"Param: {JsonConvert.SerializeObject(param)}\n" +
-                $"RequestIp: ${GetIpAddress()}");
+                $"RequestIp: {GetIpAddress()}");
 
             var command = new TransferMoneyToPlayerCommand
             {

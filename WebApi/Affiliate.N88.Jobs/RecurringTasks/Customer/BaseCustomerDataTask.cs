@@ -19,7 +19,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
         protected virtual bool IsNeedRealData => false;
 
         private readonly ITrackerService _timeTrackerService;
-        protected readonly ILicenseeApi _liceseeApi;
+        protected readonly ILicenseeApi _licenseeApi;
 
         public BaseCustomerDataTask(IThirdPartyImportRepository thirdPartyImportRepository
             , ILicenseeApi licenseeApi
@@ -29,7 +29,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
             : base(thirdPartyImportRepository, fetchServiceSetting)
         {
             _timeTrackerService = timeTrackerService ?? throw new ArgumentNullException(nameof(timeTrackerService));
-            _liceseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
+            _licenseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
         }
 
         public override async Task FetchDataAsync()
@@ -85,7 +85,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
             int pageIndex = 0;
             while (true)
             {
-                var data = await _liceseeApi.GetCustomersAsync(fromDate, toDate, pageIndex, SettingConstant.MAX_ROW_COUNT);
+                var data = await _licenseeApi.GetCustomersAsync(fromDate, toDate, pageIndex, SettingConstant.MAX_ROW_COUNT);
                 if (!data.Any())
                 {
                     break;

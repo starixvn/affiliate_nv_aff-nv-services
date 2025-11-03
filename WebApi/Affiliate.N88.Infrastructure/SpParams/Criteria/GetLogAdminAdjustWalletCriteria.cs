@@ -2,9 +2,9 @@ using Fanex.Data.Repository;
 
 namespace Affiliate.N88.SpParams.Criteria
 {
-    public class GetLogAdminAjustWalletCriteria : CriteriaBase
+    public class GetLogAdminAdjustWalletCriteria : CriteriaBase
     {
-        public GetLogAdminAjustWalletCriteria(int id, int batchCount)
+        public GetLogAdminAdjustWalletCriteria(int id, int batchCount)
         {
             Id = id;
             BatchCount = batchCount;

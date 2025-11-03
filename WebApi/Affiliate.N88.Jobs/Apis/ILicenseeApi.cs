@@ -79,7 +79,7 @@ namespace Affiliate.N88.Jobs.Apis
         Task<IEnumerable<VipUpgradeReviewInfo>> GetVipUpgradeReviews(DateTime monthDate, int pageIndex, int pageSize);
 
         [Get("/LogReport/GetLogAdminAdjustWallet")]
-        Task<IEnumerable<LogAdminAjustWalletInfo>> GetLogAdminAdjustWallet(int id, int batchCount);
+        Task<IEnumerable<LogAdminAdjustWalletInfo>> GetLogAdminAdjustWallet(int id, int batchCount);
 
         [Get("/LogReport/GetReferralMLogs")]
         Task<IEnumerable<ReferralMLogModel>> GetReferralMLogs(int id, int batchCount);

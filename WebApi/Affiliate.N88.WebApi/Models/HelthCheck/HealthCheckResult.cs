@@ -1,4 +1,4 @@
-using Affiliate.N88.WebApi.Infastructure.Enums;
+using Affiliate.N88.WebApi.Infrastructure.Enums;
 using System.Collections.Generic;
 using System.Linq;
 

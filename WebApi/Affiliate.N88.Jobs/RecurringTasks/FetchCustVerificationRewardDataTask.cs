@@ -20,7 +20,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
     public class FetchCustVerificationRewardDataTask : FetchDataForMultipleRepositoryTaskBase<CustVerificationReward>, IFetchCustVerificationRewardDataTask
     {
         private readonly ITrackerService _timeTrackerService;
-        private readonly ILicenseeApi _liceseeApi;
+        private readonly ILicenseeApi _licenseeApi;
 
         private const string PHONE_REWARD_FIELD = "PhoneRewardTime";
         private const string EMAIL_REWARD_FIELD = "EmailRewardTime";
@@ -33,7 +33,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             : base(_thirdPartyRepo, configuration.Get(Constants.ServiceConfigName.PULL_CUST_VERIFICATION_REWARD_SETTING))
         {
             _timeTrackerService = timeTrackerService ?? throw new ArgumentNullException(nameof(timeTrackerService));
-            _liceseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
+            _licenseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
         }
 
         public override async Task FetchDataAsync()
@@ -72,7 +72,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             while (isFirstTimeQuery || data.Count() == MAX_BATCH_COUNT)
             {
                 isFirstTimeQuery = false;
-                data = await _liceseeApi.GetCustVerificationRewards(queryDate, conditionFieldName, MAX_BATCH_COUNT);
+                data = await _licenseeApi.GetCustVerificationRewards(queryDate, conditionFieldName, MAX_BATCH_COUNT);
                 if (data.Any())
                 {
                     await ImportDataToMultipleRepoAsync(data);

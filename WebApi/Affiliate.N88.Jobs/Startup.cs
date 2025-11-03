@@ -42,19 +42,17 @@ namespace Affiliate.N88.Jobs
             services.AddUnderMaintenance(Configuration);
             services.AddSiteHealthChecks(Configuration);
             services.RegisterHangfire(Configuration);
+            const int HttpsPort = 443;
             services.AddHttpsRedirection(options =>
             {
-                const int httpsPort = 443;
-                options.HttpsPort = httpsPort;
+                options.HttpsPort = HttpsPort;
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Add This
             app.UsePing();
-            app.UseDeveloperExceptionPage();
 
             if (env.IsDevelopment())
             {

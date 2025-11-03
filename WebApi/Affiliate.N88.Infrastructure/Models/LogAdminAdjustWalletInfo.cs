@@ -1,6 +1,6 @@
 namespace Affiliate.N88.Models
 {
-    public class LogAdminAjustWalletInfo
+    public class LogAdminAdjustWalletInfo
     {
         public int TransferId { get; set; }
 
@@ -33,3 +33,8 @@ namespace Affiliate.N88.Models
         public int CurrencyId { get; set; }
     }
 }
+
+
+
+
+

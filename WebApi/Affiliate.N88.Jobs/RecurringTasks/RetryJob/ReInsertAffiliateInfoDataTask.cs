@@ -19,7 +19,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.RetryJob
     public class ReInsertAffiliateInfoDataTask : IReInsertAffiliateInfoDataTask
     {
         private readonly IDataTrackerService _trackerService;
-        private readonly ILicenseeApi _liceseeApi;
+        private readonly ILicenseeApi _licenseeApi;
         private readonly ILogger _logger;
 
         private static readonly IEnumerable<int> ListPullStatusId = new int[] { DataTrackerStatus.InProcess, DataTrackerStatus.Failure };
@@ -33,7 +33,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.RetryJob
             ) 
         {
             _trackerService = dataTrackerService;
-            _liceseeApi = licenseeApi;
+            _licenseeApi = licenseeApi;
             _logger = logger;
             Setting = configuration.Get(ServiceConfigName.INSERT_AFFILIATE_SETTING);
         }
@@ -50,7 +50,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.RetryJob
             foreach (var item in dataTrackerItems)
             {
                 var affiliateInfo = JsonConvert.DeserializeObject<AffiliateInfoParam>(item.PushDataInfo);
-                var result = await _liceseeApi.InsertAffiliateInfo(affiliateInfo);
+                var result = await _licenseeApi.InsertAffiliateInfo(affiliateInfo);
 
                 if (result.IsSuccess)
                 {

@@ -1,7 +1,7 @@
 ﻿using Affiliate.N88.DTO;
 using Affiliate.N88.SpParams.Criteria;
 using Affiliate.N88.WebApi.Extensions;
-using Affiliate.N88.WebApi.Infastructure.Enums;
+using Affiliate.N88.WebApi.Infrastructure.Enums;
 using Affiliate.N88.WebApi.Models.HelthCheck;
 using Fanex.Data.Repository;
 

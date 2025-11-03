@@ -83,13 +83,13 @@ namespace Affiliate.N88.Jobs.RecurringTasks
         {
             var datas = new List<IEnumerable<VipUpgradeReviewInfo>>();
             var pageIndex = 0;
-            var pageSize = 2000;
-            var data = await _licenseeApi.GetVipUpgradeReviews(fromDate, pageIndex, pageSize);
+            const int PageSize = 2000;
+            var data = await _licenseeApi.GetVipUpgradeReviews(fromDate, pageIndex, PageSize);
             datas.Add(data);
-            while (data.Count() == pageSize)
+            while (data.Count() == PageSize)
             {
                 pageIndex++;
-                data = await _licenseeApi.GetVipUpgradeReviews(fromDate, pageIndex, pageSize);
+                data = await _licenseeApi.GetVipUpgradeReviews(fromDate, pageIndex, PageSize);
                 datas.Add(data);
             }
             return datas;
