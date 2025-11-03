@@ -58,16 +58,5 @@ namespace Affiliate.N88.Jobs.Extensions
             context.Response.ContentType = MediaTypeNames.Application.Json;
             await context.Response.WriteAsync(result);
         }
-
-        //private static IHealthChecksBuilder AddMultiSqlServer(this IHealthChecksBuilder services, IConfiguration configuration)
-        //{
-        //    var connectionStrings = configuration.GetSection("ConnectionStrings").GetChildren();
-        //    foreach (var connectionString in connectionStrings)
-        //    {
-        //        var rawConnectionstring = Cryptography.DecryptConnectionString(connectionString.GetSection("ConnectionString").Value);
-        //        services.AddSqlServer(rawConnectionstring, name: connectionString.GetSection("Name").Value);
-        //    }
-        //    return services;
-        //}
     }
 }

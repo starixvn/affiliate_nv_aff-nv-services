@@ -1,9 +1,4 @@
-﻿using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Fanex.Data.Repository;
 
 namespace Affiliate.N88.SpParams.Criteria
 {
@@ -15,6 +10,6 @@ namespace Affiliate.N88.SpParams.Criteria
 
         public override bool IsValid() => true;
 
-        public string CustIdList { get; set; }
+        public string? CustIdList { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Affiliate.N88.WebApi.Infastructure.Enums;
+using Affiliate.N88.WebApi.Infrastructure.Enums;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -6,7 +6,7 @@ namespace Affiliate.N88.WebApi.Models.HelthCheck
 {
     public class HealthCheckItemResult
     {
-        public HealthCheckItemResult(string resourceName, int sortOrder, string friendlyName, string description = null)
+        public HealthCheckItemResult(string resourceName, int sortOrder, string friendlyName, string? description = null)
         {
             ResourceName = resourceName;
             SortOrder = sortOrder;
@@ -14,7 +14,7 @@ namespace Affiliate.N88.WebApi.Models.HelthCheck
             Description = description;
         }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public string FriendlyName { get; }
 

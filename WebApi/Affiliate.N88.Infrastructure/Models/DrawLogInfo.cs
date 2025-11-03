@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Affiliate.N88.Models
 {
     public class DrawLogInfo
@@ -16,7 +10,7 @@ namespace Affiliate.N88.Models
 
         public int PrizeId { get; set; }
 
-        public string PrizeName { get; set; }
+        public string? PrizeName { get; set; }
 
         public Decimal Amount { get; set; }
 

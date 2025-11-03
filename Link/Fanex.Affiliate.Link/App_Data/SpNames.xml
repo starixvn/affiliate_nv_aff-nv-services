@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
-  <Function Name="Aff-Link">
-    <Setting Key="Aff_AffiliateInsClickStatistics" SpName="Aff_ClickStatistics_Ins" DbName="DBAFF.Affiliate_B2C.wsv_afinet" Plain="0" />
-    <Setting Key="Aff_Get_GeneralAffInfo" SpName="Aff_Get_GeneralAffInfo" DbName="DBAFF.Affiliate_B2C.wsv_afinet" Plain="0" />
-  </Function>
-</Functions>

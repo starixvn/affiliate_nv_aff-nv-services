@@ -1,10 +1,11 @@
-﻿using Fanex.Data.Repository;
+using Affiliate.N88.Constants;
+using Fanex.Data.Repository;
 
 namespace Affiliate.N88.SpParams.Criteria
 {
     public class GetTpTransferInfoCriteria : CriteriaBase
     {
-        public GetTpTransferInfoCriteria(int transferId, int batchCount = 2000)
+        public GetTpTransferInfoCriteria(int transferId, int batchCount = PagingConstants.DefaultBatchCount)
         {
             Id = transferId;
             BatchCount = batchCount;

@@ -1,18 +1,16 @@
-﻿using System;
-
 namespace Affiliate.N88.Models
 {
     public class TpReport9W
     {
         public long SQ { get; set; }
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
-        public string AgentId { get; set; }
+        public string? AgentId { get; set; }
 
-        public string EventId { get; set; }
+        public string? EventId { get; set; }
 
-        public string MarketId { get; set; }
+        public string? MarketId { get; set; }
 
         public DateTime SettledDate { get; set; }
 

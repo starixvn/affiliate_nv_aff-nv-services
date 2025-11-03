@@ -1,7 +1,4 @@
 ﻿using Affiliate.N88.WebApi.DTO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.WebApi.Repository
 {

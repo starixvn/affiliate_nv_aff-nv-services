@@ -1,11 +1,11 @@
-﻿using Fanex.Data.Repository;
-using System;
+using Affiliate.N88.Constants;
+using Fanex.Data.Repository;
 
 namespace Affiliate.N88.SpParams.Criteria
 {
     public class GetDepositInfoCriteria : CriteriaBase
     {
-        public GetDepositInfoCriteria(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = 2000)
+        public GetDepositInfoCriteria(DateTime fromDate, DateTime toDate, int pageIndex, int pageSize = PagingConstants.DefaultPageSize)
         {
             FromDate = fromDate;
             ToDate = toDate;

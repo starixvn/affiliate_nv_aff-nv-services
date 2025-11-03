@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.Constants;
 using Affiliate.N88.Jobs.RecurringTasks.Interfaces;
@@ -33,8 +34,11 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             Api = licenseeApi;
         }
 
-        protected override Task<IEnumerable<Withdrawal>> GetDataAsync(string trackValue, int batchCount)
-            => Api.GetWithdrawalInfo(Convert.ToDateTime(trackValue), batchCount);
+        protected override async Task<IEnumerable<Withdrawal>> GetDataAsync(string trackValue, int batchCount)
+        {
+            var result = await Api.GetWithdrawalInfo(Convert.ToDateTime(trackValue), batchCount);
+            return result;
+        }
 
         protected override string GetInsertTrackingValue(IEnumerable<Withdrawal> data)
         {
@@ -42,7 +46,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
 
             if (trackValue.HasValue)
             {
-                return trackValue.Value.ToString();
+                return trackValue.Value.ToString(Format.DateTimeFormat);
             }
             throw new ArgumentException($"Can not insert nullable DateTime Tracker Value of table {TableName}");
         }

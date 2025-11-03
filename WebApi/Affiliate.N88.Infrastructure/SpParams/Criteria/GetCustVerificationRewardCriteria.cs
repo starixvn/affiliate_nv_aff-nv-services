@@ -1,5 +1,4 @@
-﻿using Fanex.Data.Repository;
-using System;
+using Fanex.Data.Repository;
 
 namespace Affiliate.N88.SpParams.Criteria
 {
@@ -7,7 +6,7 @@ namespace Affiliate.N88.SpParams.Criteria
     {
         public DateTime LastRewardTime { get; set; }
 
-        public string ConditionField { get; set; }
+        public string? ConditionField { get; set; }
 
         public int BatchCount { get; set; }
 

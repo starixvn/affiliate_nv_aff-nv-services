@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.RecurringTasks.Interfaces;
 using Affiliate.N88.Models;
@@ -111,7 +112,11 @@ namespace Affiliate.N88.Jobs.RecurringTasks
                 try
                 {
                     await FetchAndInsertDataByPageAsync(range.FromDate, range.ToDate);
-                    var tracker = new TrackerInfo { CalledTime = DateTime.Now, KeyValue = range.ToDate.ToString() };
+                    var tracker = new TrackerInfo 
+                    { 
+                        CalledTime = DateTimeOffset.Now.DateTime, 
+                        KeyValue = range.ToDate.ToString(Format.DateTimeFormat)
+                    };
                     await _timeTrackerService.SaveTrackerAsync(TableName, tracker);
                 }
                 catch (Exception ex)

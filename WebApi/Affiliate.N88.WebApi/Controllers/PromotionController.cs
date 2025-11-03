@@ -2,14 +2,13 @@
 using Affiliate.N88.SpParams.Criteria;
 using Affiliate.N88.WebApi.Repository;
 using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
-    public class PromotionController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class PromotionController : ControllerBase
     {
         private IDynamicRepository DynamicRepo { get; }
         
@@ -18,13 +17,12 @@ namespace Affiliate.N88.WebApi.Controllers
             DynamicRepo = dynamicRepository;
         }
 
+        [HttpGet("GetPromotions")]
+        public async Task<ActionResult<IEnumerable<PromotionModel>>> GetPromotions(DateTime fromDate, DateTime toDate)
+            => Ok(await DynamicRepo.FetchAsync<PromotionModel>(new GetPromotionCriteria(fromDate, toDate)));
 
-        [HttpGet]
-        public async Task<IEnumerable<PromotionModel>> GetPromotions(DateTime fromDate, DateTime toDate)
-            => await DynamicRepo.FetchAsync<PromotionModel>(new GetPromotionCriteria(fromDate, toDate));
-
-        [HttpGet]
-        public async Task<IEnumerable<PromotionSpecificModel>> GetPromotionSpecifics(DateTime fromDate, DateTime toDate)
-            => await DynamicRepo.FetchAsync<PromotionSpecificModel>(new GetPromotionSpecificCriteria(fromDate, toDate));
+        [HttpGet("GetPromotionSpecifics")]
+        public async Task<ActionResult<IEnumerable<PromotionSpecificModel>>> GetPromotionSpecifics(DateTime fromDate, DateTime toDate)
+            => Ok(await DynamicRepo.FetchAsync<PromotionSpecificModel>(new GetPromotionSpecificCriteria(fromDate, toDate)));
     }
 }

@@ -61,10 +61,10 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
                 var pageIndex = 0;
                 while (true)
                 {
-                    var data = await _liceseeApi.GetCustomersAsync(range.FromDate, range.ToDate, pageIndex, BATCH_COUNT);
+                    var data = await _licenseeApi.GetCustomersAsync(range.FromDate, range.ToDate, pageIndex, SettingConstant.MAX_ROW_COUNT);
                     await ImportDataToMultipleRepoAsync(data);
                     pageIndex++;
-                    if (data.Count() < BATCH_COUNT)
+                    if (data.Count() < SettingConstant.MAX_ROW_COUNT)
                     {
                         break;
                     }
@@ -74,7 +74,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
 
         public async Task FetchFixedDataTask()
         {
-            var data = await _liceseeApi.GetFixedCustomers();
+            var data = await _licenseeApi.GetFixedCustomers();
             await ImportDataToMultipleRepoAsync(data);
         }
     }

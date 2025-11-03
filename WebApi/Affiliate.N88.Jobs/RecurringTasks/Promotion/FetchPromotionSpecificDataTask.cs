@@ -1,4 +1,9 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading.Tasks;
+using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.RecurringTasks.Interfaces;
 using Affiliate.N88.Models;
@@ -7,9 +12,6 @@ using Affiliate.N88.Services;
 using Affiliate.N88.Utitlities;
 using Fanex.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.Jobs.RecurringTasks.Promotion
 {
@@ -41,7 +43,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Promotion
         public override async Task FetchDataAsync()
         {
             var tracker = await TrackerService.GetTrackerAsync(TableName, t => t.CalledTime);
-            var fromDate = DateTime.Parse(tracker.KeyValue);
+            var fromDate = DateTimeOffset.Parse(tracker.KeyValue, CultureInfo.InvariantCulture).DateTime;
             var toDate = GetAdjustmentTime();
             await FetchDataAndTrackTimeAsync(fromDate, toDate);
         }
@@ -74,8 +76,13 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Promotion
             {
                 try
                 {
+
                     await FetchAndInsertDataAsync(range.FromDate, range.ToDate);
-                    var tracker = new TrackerInfo { CalledTime = DateTime.Now, KeyValue = range.ToDate.ToString() };
+                    var tracker = new TrackerInfo 
+                    { 
+                        CalledTime = DateTimeOffset.Now.DateTime, 
+                        KeyValue = range.ToDate.ToString(Format.DateTimeFormat)
+                    };
                     await TrackerService.SaveTrackerAsync(TableName, tracker);
                 }
                 catch

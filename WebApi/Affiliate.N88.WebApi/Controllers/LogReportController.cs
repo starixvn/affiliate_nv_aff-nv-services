@@ -1,45 +1,44 @@
-﻿using Affiliate.N88.Models;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Models;
 using Affiliate.N88.SpParams.Criteria;
 using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
-    public class LogReportController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class LogReportController : ControllerBase
     {
-        public IDynamicRepository Repo { get; }
+        private readonly IDynamicRepository _repo;
 
         public LogReportController(IDynamicRepository repo)
         {
-            Repo = repo;
+            _repo = repo;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<RebateMLogModel>> GetRebateMLogs(DateTime fromDate, DateTime toDate)
-            => await Repo.FetchAsync<RebateMLogModel>(new GetRebateMLogCriteria(fromDate, toDate));
+        [HttpGet("GetRebateMLogs")]
+        public async Task<ActionResult<IEnumerable<RebateMLogModel>>> GetRebateMLogs(DateTime fromDate, DateTime toDate)
+            => Ok(await _repo.FetchAsync<RebateMLogModel>(new GetRebateMLogCriteria(fromDate, toDate)));
 
-        [HttpGet]
-        public async Task<IEnumerable<DrawLogInfo>> GetDrawLogs(int id, int batchCount = 2000)
-            => await Repo.FetchAsync<DrawLogInfo>(new GetDrawLogCritearia(id, batchCount));
+        [HttpGet("GetDrawLogs")]
+        public async Task<ActionResult<IEnumerable<DrawLogInfo>>> GetDrawLogs(int id, int batchCount = PagingConstants.DefaultBatchCount)
+            => Ok(await _repo.FetchAsync<DrawLogInfo>(new GetDrawLogCritearia(id, batchCount)));
 
-        [HttpGet]
-        public async Task<IEnumerable<EventDrawInfo>> GetEventDraws(int id, int batchCount = 2000)
-            => await Repo.FetchAsync<EventDrawInfo>(new GetEventDrawCritearia(id, batchCount));
+        [HttpGet("GetEventDraws")]
+        public async Task<ActionResult<IEnumerable<EventDrawInfo>>> GetEventDraws(int id, int batchCount = PagingConstants.DefaultBatchCount)
+            => Ok(await _repo.FetchAsync<EventDrawInfo>(new GetEventDrawCritearia(id, batchCount)));
 
+        [HttpGet("GetLogAdminAdjustWallet")]
+        public async Task<ActionResult<IEnumerable<LogAdminAdjustWalletInfo>>> GetLogAdminAdjustWallet(int id, int batchCount = PagingConstants.DefaultBatchCount)
+            => Ok(await _repo.FetchAsync<LogAdminAdjustWalletInfo>(new GetLogAdminAdjustWalletCriteria(id, batchCount)));
 
-        [HttpGet]
-        public async Task<IEnumerable<LogAdminAjustWalletInfo>> GetLogAdminAdjustWallet(int id, int batchCount = 2000)
-            => await Repo.FetchAsync<LogAdminAjustWalletInfo>(new GetLogAdminAjustWalletCriteria(id, batchCount));
+        [HttpGet("GetReferralMLogs")]
+        public async Task<ActionResult<IEnumerable<ReferralMLogModel>>> GetReferralMLogs(int id, int batchCount = PagingConstants.DefaultBatchCount)
+            => Ok(await _repo.FetchAsync<ReferralMLogModel>(new GetReferralMLogCriteria(id, batchCount)));
 
-        [HttpGet]
-        public async Task<IEnumerable<ReferralMLogModel>> GetReferralMLogs(int id, int batchCount = 2000)
-            => await Repo.FetchAsync<ReferralMLogModel>(new GetReferralMLogCriteria(id, batchCount));
-
-        [HttpGet]
-        public async Task<IEnumerable<ReferralLogModel>> GetReferralLogs(int id, int batchCount = 2000)
-            => await Repo.FetchAsync<ReferralLogModel>(new GetReferralLogCriteria(id, batchCount));
+        [HttpGet("GetReferralLogs")]
+        public async Task<ActionResult<IEnumerable<ReferralLogModel>>> GetReferralLogs(int id, int batchCount = PagingConstants.DefaultBatchCount)
+            => Ok(await _repo.FetchAsync<ReferralLogModel>(new GetReferralLogCriteria(id, batchCount)));
     }
 }

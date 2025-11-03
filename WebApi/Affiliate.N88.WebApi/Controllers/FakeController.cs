@@ -1,23 +1,22 @@
 ﻿using Affiliate.N88.Models;
 using Affiliate.N88.WebApi.Models.Fake;
-using Fanex.Data.Repository;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
-    public class FakeController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class FakeController : ControllerBase
     {
 
-        [HttpPost]
-        public SetAccountResult SetCustActStatus(AccountParam param)
+        [HttpPost("SetCustActStatus")]
+        public ActionResult<SetAccountResult> SetCustActStatus(AccountParam param)
         {
-            return new SetAccountResult
+            return Ok(new SetAccountResult
             {
                 Data = false,
                 ErrorCode = 99
-            };
+            });
         }
       
     }

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Affiliate.N88.Models
 {
     public class VipUpgradeReviewInfo
     {
         public int CustId { get; set; }
 
-        public string CalculateMonth { get; set; }
+        public string? CalculateMonth { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int SiteId { get; set; }
 
@@ -28,12 +22,12 @@ namespace Affiliate.N88.Models
 
         public int Status { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateTime { get; set; }
 
         public DateTime LastUpdateTime { get; set; }
 
         public DateTime SettleTime { get; set; }
 
-        public string LastUpdateUser { get; set; }
+        public string? LastUpdateUser { get; set; }
     }
 }

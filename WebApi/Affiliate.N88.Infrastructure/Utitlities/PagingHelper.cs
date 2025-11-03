@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Affiliate.N88.Utitlities
+﻿namespace Affiliate.N88.Utitlities
 {
     public static class PagingHelper
     {
@@ -10,7 +7,7 @@ namespace Affiliate.N88.Utitlities
             var result = new List<IEnumerable<T>>();
             result.Add(datas.Take(max));
             var remain = datas.Skip(max);
-            while (remain.Count() > 0)
+            while (remain.Any())
             {
                 result.Add(remain.Take(max));
                 remain = remain.Skip(max);

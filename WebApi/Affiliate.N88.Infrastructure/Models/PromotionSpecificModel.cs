@@ -1,10 +1,8 @@
-﻿using System;
-
 namespace Affiliate.N88.Models
 {
     public class PromotionSpecificModel
     {
-        public string BonusCode { get; set; }
+        public string? BonusCode { get; set; }
 
         public byte CurrencyId { get; set; }
 
@@ -22,13 +20,13 @@ namespace Affiliate.N88.Models
 
         public decimal RequiredAmount { get; set; }
 
-        public string LockedType { get; set; }
+        public string? LockedType { get; set; }
 
         public decimal MaxBonus { get; set; }
 
         public byte Status { get; set; }
 
-        public string Details { get; set; }
+        public string? Details { get; set; }
 
         public DateTime CreateTime { get; set; }
 
@@ -44,8 +42,8 @@ namespace Affiliate.N88.Models
 
         public int VN_AffId { get; set; }
 
-        public string VN_AffIds { get; set; }
+        public string? VN_AffIds { get; set; }
 
-        public string VN_AffCodes { get; set; }
+        public string? VN_AffCodes { get; set; }
     }
 }

@@ -62,11 +62,12 @@ namespace Affiliate.N88.Jobs.RecurringTasks
         protected override async Task ImportDataByBatchAsync(IEnumerable<CustClosingBalanceModel> data)
         {
             if (!data.Any())
+            {
                 return;
+            }
 
-            var importData = data;
-            await ImportDataToMultipleRepoAsync(importData);
-            var trackValue = GetInsertTrackingValue(importData);
+            await ImportDataToMultipleRepoAsync(data);
+            var trackValue = GetInsertTrackingValue(data);
             await _timeTrackerService.SaveTrackerAsync(TableName,
                 new TrackerInfo
                 {
@@ -78,7 +79,8 @@ namespace Affiliate.N88.Jobs.RecurringTasks
 
         protected override Task<IEnumerable<CustClosingBalanceModel>> GetDataAsync(string trackValue, int batchCount)
         {
-            throw new NotImplementedException();
+            // This method is not used in this implementation as we override GetDataAsync with DateTime parameter
+            return Task.FromResult(Enumerable.Empty<CustClosingBalanceModel>());
         }
 
         private Task<IEnumerable<CustClosingBalanceModel>> GetDataAsync(DateTime fromDate, int pageIndex, int pageSize)
@@ -90,12 +92,12 @@ namespace Affiliate.N88.Jobs.RecurringTasks
         protected override async Task<string> GetLastTrackingValueAsync()
         {
             var tracker = await _timeTrackerService.GetTrackerAsync(TableName, t => t.CalledTime);
-            var date = string.IsNullOrWhiteSpace(tracker.KeyValue) ? new DateTime() : Convert.ToDateTime(tracker.KeyValue);
+            var date = string.IsNullOrWhiteSpace(tracker.KeyValue) ? DateTime.MinValue : Convert.ToDateTime(tracker.KeyValue);
             var queryId = GetAdjustmentId(date);
             return queryId.ToString(DateTimeFormat);
         }
 
         private DateTime GetAdjustmentId(DateTime date)
-            => date == new DateTime() ? date : date.AddMinutes(Settings.AdjustmentValue);
+            => date == DateTime.MinValue ? date : date.AddMinutes(Settings.AdjustmentValue);
     }
 }

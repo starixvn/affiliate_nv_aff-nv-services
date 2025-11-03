@@ -1,14 +1,12 @@
-﻿using System;
-
 namespace Affiliate.N88.Models
 {
    public  class PromotionModel
    {
-        public string BonusCode { get; set; }
+        public string? BonusCode { get; set; }
 
         public int SiteId { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public int PromotionType { get; set; }
 
@@ -34,7 +32,7 @@ namespace Affiliate.N88.Models
 
         public DateTime? LastUpdateTime { get; set; }
 
-        public string LastUpdateUser { get; set; }
+        public string? LastUpdateUser { get; set; }
 
         public int? WalletType { get; set; }
 
@@ -44,7 +42,7 @@ namespace Affiliate.N88.Models
 
         public int? PeriodDay { get; set; }
 
-        public string SpecialCode { get; set; }
+        public string? SpecialCode { get; set; }
 
         public bool IsSpecial { get; set; }
     }

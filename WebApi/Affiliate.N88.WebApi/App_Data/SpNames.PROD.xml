@@ -1,0 +1,45 @@
+﻿<Functions>
+  <Function Name="N88Licensee">
+    <Setting Key="Aff_CustomerSel" SpName="Aff_CustomerSel_V3" DbName="N88Licensee_Read" >
+      <Mapping DataField="FirstDepositTime" ObjectProperty="FirstDepositDate" />
+    </Setting>
+    <Setting Key="Slave_N88_Get_ServerInfo" SpName="N88_Get_ServerInfo" DbName="N88Licensee_Read" />
+    <Setting Key="Master_N88_Get_ServerInfo" SpName="N88_Get_ServerInfo" DbName="N88Licensee_Write" />
+    <Setting Key="N88_Get_TpBetRecord" SpName="N88_Get_TpBetRecord_Dynamic" DbName="N88Licensee_Read" />
+    <Setting Key="N88_Get_TpGameType" SpName="N88_Get_TpGameType" DbName="N88Licensee_Read"/>
+    <Setting Key="N88_Get_Customer" SpName="N88_Get_Customer" DbName="N88Licensee_Read"/>
+    <Setting Key="API_CustBonusRollover_Get" SpName="API_CustBonusRollover_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_CustRegInfo_Get" SpName="API_CustRegInfo_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="N88_Get_ServerInfo" SpName="N88_Get_ServerInfo" DbName="N88Licensee_Read"/>
+    <Setting Key="N88_Get_TpTransferInfo" SpName="API_TpTransferInfo_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="N88_Get_DepositInfo" SpName="API_DepositInfo_Get_YB" DbName="N88Licensee_Read"/>
+    <Setting Key="Affiliate_LoginCustInfo_Get" SpName="Affiliate_LoginCustInfo_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_BonusInfo_Get" SpName="API_BonusInfo_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_BonusInfoByDate_Get" SpName="API_BonusInfoByDate_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_WithdrawalInfo_Get" SpName="API_WithdrawalInfo_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="Affiliate_Wallet_Set" SpName="Affiliate_Wallet_Set" DbName="N88Licensee_Write"/>
+    <Setting Key="API_Promotion_Get" SpName="API_Promotion_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_PromotionSpecific_Get" SpName="API_PromotionSpecific_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_RebateMLog_Get" SpName="API_RebateMLog_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_CustClosingBalance_Get" SpName="API_CustClosingBalance_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_Customer_Unlock" SpName="API_Customer_Unlock" DbName="N88Licensee_Write"/>
+    <Setting Key="API_BalanceInfo_Get" SpName="API_BalanceInfo_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="Affiliate_TransferToPlayer" SpName="Affiliate_TransferToPlayer" DbName="N88Licensee_Write"/>
+    <Setting Key="API_AdjustmentInfo_Get" SpName="API_AdjustmentInfo_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_DrawLog_Get" SpName="API_DrawLog_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_EventDraw_Get" SpName="API_EventDraw_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_VIPUpgradeReview_Get" SpName="API_VIPUpgradeReview_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_LogAdminAdjustWallet_Get" SpName="API_LogAdminAdjustWallet_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_CustVerificationReward_Get" SpName="API_CustVerificationReward_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_ReferralMLog_Get" SpName="API_ReferralMLog_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="API_ReferralLog_Get" SpName="API_ReferralLog_Get" DbName="N88Licensee_Read"/>
+    <Setting Key="Affiliate_AffiliateInfo_Set" SpName="Affiliate_AffiliateInfo_Set_V4" DbName="N88Licensee_Write"/>
+  </Function>
+  <Function Name="9W">
+    <Setting Key="API_TpReport9W_Get" SpName="API_TpReport9W_Get_V2" DbName="B2CMemberSite.BetDetail.Affiliate_Api"/>
+    <Setting Key="API_TpWager9W_Get" SpName="API_TpWager9W_Get_V2" DbName="B2CMemberSite.BetDetail.Affiliate_Api"/>  
+  </Function>
+  <Function Name="Test">
+    <Setting Key="N88_Get_Customer_xtest" SpName="N88_Get_Customer_xtest" DbName="N88Licensee_Read"/>
+  </Function>
+</Functions>

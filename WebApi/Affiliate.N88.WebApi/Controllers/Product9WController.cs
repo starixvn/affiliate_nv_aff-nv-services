@@ -2,13 +2,13 @@
 using Affiliate.N88.Params;
 using Affiliate.N88.SpParams.Criteria;
 using Fanex.Data.Repository;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
-    public class Product9WController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class Product9WController : ControllerBase
     {
 
         private readonly IDynamicRepository dynamicRepository;
@@ -18,24 +18,24 @@ namespace Affiliate.N88.WebApi.Controllers
             this.dynamicRepository = dynamicRepository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<TpReport9W>> GetTpReport([FromUri] BatchCountParam param)
-            => await dynamicRepository.FetchAsync<TpReport9W>(new GetTpReport9WCriteria
+        [HttpGet("GetTpReport")]
+        public async Task<ActionResult<IEnumerable<TpReport9W>>> GetTpReport([FromQuery] BatchCountParam param)
+            => Ok(await dynamicRepository.FetchAsync<TpReport9W>(new GetTpReport9WCriteria
             {
                 SQ = param.SQ,
                 FromDate = param.FromDate,
                 ToDate = param.ToDate,
                 BatchCount = param.BatchCount
-            });
+            }));
 
-        [HttpGet]
-        public async Task<IEnumerable<TpWager9W>> GetTpWager([FromUri] BatchCountParam param)
-            => await dynamicRepository.FetchAsync<TpWager9W>(new GetTpWager9WCriteria
+        [HttpGet("GetTpWager")]
+        public async Task<ActionResult<IEnumerable<TpWager9W>>> GetTpWager([FromQuery] BatchCountParam param)
+            => Ok(await dynamicRepository.FetchAsync<TpWager9W>(new GetTpWager9WCriteria
             {
                 CreateTime = param.CreateTime,
                 FromDate = param.FromDate,
                 ToDate = param.ToDate,
                 BatchCount = param.BatchCount
-            });
+            }));
     }
 }

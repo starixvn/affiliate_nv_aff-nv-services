@@ -1,4 +1,4 @@
-﻿namespace Affiliate.N88.Models
+namespace Affiliate.N88.Models
 {
     public class CustRegInfo
     {
@@ -6,8 +6,8 @@
 
         public int? SiteId { get; set; }
 
-        public string SignUpUrl { get; set; }
+        public string? SignUpUrl { get; set; }
 
-        public string RegTime { get; set; }
+        public string? RegTime { get; set; }
     }
 }

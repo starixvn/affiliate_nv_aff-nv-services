@@ -1,4 +1,4 @@
-﻿namespace Affiliate.N88.WebApi.Models.Fake
+namespace Affiliate.N88.WebApi.Models.Fake
 {
     public class SetAccountResult
     {
@@ -6,10 +6,10 @@
 
         public int ErrorCode { get; set; }
 
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
-        public string RawErrorCode { get; set; }
+        public string? RawErrorCode { get; set; }
 
-        public string RawMessage { get; set; }
+        public string? RawMessage { get; set; }
     }
 }

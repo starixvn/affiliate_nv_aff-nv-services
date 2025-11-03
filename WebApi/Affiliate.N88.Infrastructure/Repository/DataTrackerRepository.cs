@@ -4,9 +4,6 @@ using Affiliate.N88.DTOs;
 using Affiliate.N88.SpParams;
 using Affiliate.N88.SpParams.Commands;
 using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.Repository
 {

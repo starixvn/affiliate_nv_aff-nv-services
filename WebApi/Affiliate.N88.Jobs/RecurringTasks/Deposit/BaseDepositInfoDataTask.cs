@@ -1,5 +1,6 @@
 ﻿using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
+using Affiliate.N88.Jobs.Constants;
 using Affiliate.N88.Models;
 using Affiliate.N88.Repository;
 using Affiliate.N88.Services;
@@ -18,8 +19,6 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Deposit
         private readonly ILicenseeApi _licenseeApi;
         private readonly ILogger _logger;
         private readonly ITrackerService _trackerService;
-
-        private const int MAX_ROW_COUNT = 2000;
         protected virtual bool IsNeedRealData => false;
 
         public BaseDepositInfoDataTask(IThirdPartyImportRepository thirdPartyImportRepository
@@ -66,7 +65,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Deposit
         {
             var lastDateRange = dateRanges.LastOrDefault();
 
-            if (lastDateRange.ToDate != default(DateTime))
+            if (lastDateRange.ToDate != DateTime.MinValue)
             {
                 await HandleImportDataAsync(lastDateRange.ToDate, apiServerNow.AddSeconds(-5), false);
             }
@@ -77,7 +76,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Deposit
             int pageIndex = 0;
             while (true)
             {
-                var data = await _licenseeApi.GetDepositInfo(fromDate, toDate, pageIndex, MAX_ROW_COUNT);
+                var data = await _licenseeApi.GetDepositInfo(fromDate, toDate, pageIndex, SettingConstant.MAX_ROW_COUNT);
                 if (!data.Any())
                 {
                     break;
@@ -100,7 +99,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Deposit
                         });
                 }
 
-                if (data.Count() < MAX_ROW_COUNT)
+                if (data.Count() < SettingConstant.MAX_ROW_COUNT)
                 {
                     break;
                 }

@@ -1,11 +1,9 @@
 ﻿using Affiliate.N88.DTO;
 using Affiliate.N88.SpParams.Criteria;
 using Affiliate.N88.WebApi.Extensions;
-using Affiliate.N88.WebApi.Infastructure.Enums;
+using Affiliate.N88.WebApi.Infrastructure.Enums;
 using Affiliate.N88.WebApi.Models.HelthCheck;
 using Fanex.Data.Repository;
-using System;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.WebApi.Health
 {
@@ -17,7 +15,7 @@ namespace Affiliate.N88.WebApi.Health
         public int SortOrder { get; }
 
 
-        public DatabaseHealthCheckProvider(IDynamicRepository repo, DatabaseServerType databaseServerType, int sortOrder = 20)
+        public DatabaseHealthCheckProvider(IDynamicRepository repo, DatabaseServerType databaseServerType, int sortOrder)
         {
             Repo = repo;
             DatabaseServerType = databaseServerType;

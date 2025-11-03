@@ -1,15 +1,14 @@
 ﻿using Affiliate.N88.WebApi.Health;
 using Affiliate.N88.WebApi.Models.HelthCheck;
-using System;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
     [Route("api/health")]
-    public class HealthController : ApiController
+    [ApiController]
+    public class HealthController : ControllerBase
     {
         private IEnumerable<IHealthCheckProvider> HealthCheckProviders { get; }
 
@@ -18,9 +17,9 @@ namespace Affiliate.N88.WebApi.Controllers
             HealthCheckProviders = healthCheckProviders;
         }
 
-        [HttpGet]
+        [HttpGet("Index")]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var result = new HealthCheckResult 
             {

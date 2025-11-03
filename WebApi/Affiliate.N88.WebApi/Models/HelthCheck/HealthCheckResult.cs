@@ -1,4 +1,4 @@
-﻿using Affiliate.N88.WebApi.Infastructure.Enums;
+using Affiliate.N88.WebApi.Infrastructure.Enums;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +17,7 @@ namespace Affiliate.N88.WebApi.Models.HelthCheck
         /// <summary>
         /// Gets or sets the current machine name.
         /// </summary>
-        public string MachineName { get; set; }
+        public string? MachineName { get; set; }
 
         /// <summary>
         /// Gets or sets the total time in seconds it took to test all connected health check providers.

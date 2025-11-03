@@ -7,7 +7,7 @@ namespace Affiliate.N88.DTOs
     public class DataTrackerItem
     {
         [SpParam(Ignored = true)]
-        public IPrefixProvider PrefixProvider { get; set; }
+        public IPrefixProvider? PrefixProvider { get; set; }
 
         public int PushTrackerId { get; set; }
 
@@ -15,6 +15,6 @@ namespace Affiliate.N88.DTOs
 
         public int PushDataType { get; set; }
 
-        public string PushDataInfo { get; set; }
+        public string? PushDataInfo { get; set; }
     }
 }

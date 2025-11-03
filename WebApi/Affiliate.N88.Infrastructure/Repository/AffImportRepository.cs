@@ -2,8 +2,6 @@
 using Affiliate.N88.Exceptions;
 using Affiliate.N88.SpParams.Commands;
 using Fanex.Data.Repository;
-using System;
-using System.Threading.Tasks;
 
 namespace Affiliate.N88.Repository
 {
@@ -27,7 +25,7 @@ namespace Affiliate.N88.Repository
             await _dynamicRepository.ExecuteAsync(memberInfo);
             if (memberInfo.ErrCode != 0)
             {
-                throw new ImporterException(memberInfo.ErrCode.ToString(), memberInfo.ErrMsg, memberInfo.XmlData);
+                throw new ImporterException(memberInfo.ErrCode.ToString(), memberInfo.ErrMsg ?? string.Empty, memberInfo.XmlData ?? string.Empty);
             }
         }
 
@@ -37,7 +35,7 @@ namespace Affiliate.N88.Repository
 
             if (command.ErrCode != 0)
             {
-                throw new ImporterException(command.ErrCode, command.ErrMsg);
+                throw new ImporterException(command.ErrCode, command.ErrMsg ?? string.Empty);
             }
         }
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Affiliate.N88.Utitlities
+﻿namespace Affiliate.N88.Utitlities
 {
     public static class DateTimeHelper
     {

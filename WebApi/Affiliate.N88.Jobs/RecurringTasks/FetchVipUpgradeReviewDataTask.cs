@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.RecurringTasks.Interfaces;
 using Affiliate.N88.Models;
@@ -71,7 +72,8 @@ namespace Affiliate.N88.Jobs.RecurringTasks
                         await ImportDataToMultipleRepoAsync(data);
                     }
                 }
-                var tracker = new TrackerInfo { CalledTime = DateTime.Now, KeyValue = fromDate.ToString() };
+                var tracker = new TrackerInfo { CalledTime = DateTimeOffset.Now.DateTime, 
+                    KeyValue = fromDate.ToString(Format.DateTimeFormat) };
                 await _timeTrackerService.SaveTrackerAsync(TableName, tracker);
                 fromDate = fromDate.AddMonths(1);
             }
@@ -81,13 +83,13 @@ namespace Affiliate.N88.Jobs.RecurringTasks
         {
             var datas = new List<IEnumerable<VipUpgradeReviewInfo>>();
             var pageIndex = 0;
-            var pageSize = 2000;
-            var data = await _licenseeApi.GetVipUpgradeReviews(fromDate, pageIndex, pageSize);
+            const int PageSize = 2000;
+            var data = await _licenseeApi.GetVipUpgradeReviews(fromDate, pageIndex, PageSize);
             datas.Add(data);
-            while (data.Count() == pageSize)
+            while (data.Count() == PageSize)
             {
                 pageIndex++;
-                data = await _licenseeApi.GetVipUpgradeReviews(fromDate, pageIndex, pageSize);
+                data = await _licenseeApi.GetVipUpgradeReviews(fromDate, pageIndex, PageSize);
                 datas.Add(data);
             }
             return datas;

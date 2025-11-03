@@ -1,16 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fanex.Data" Version="4.2.2" />
-    <PackageReference Include="Fanex.Data.Repository" Version="4.2.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Web" />
+    <PackageReference Include="Fanex.Data" Version="4.3.4.5" />
+    <PackageReference Include="Fanex.Data.Repository" Version="4.3.4.5" />
   </ItemGroup>
 
 </Project>

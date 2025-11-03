@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace Affiliate.N88.Models
 {
     public class CustRegModel
@@ -8,7 +6,7 @@ namespace Affiliate.N88.Models
 
         public int? SiteId { get; set; }
 
-        public string SignUpUrl { get; set; }
+        public string? SignUpUrl { get; set; }
 
         public DateTimeOffset RegTime { get; set; }
     }

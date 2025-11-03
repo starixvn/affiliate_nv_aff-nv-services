@@ -15,16 +15,10 @@ namespace Affiliate.N88.Jobs
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                    .SetBasePath(AppContext.BaseDirectory)
-                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                    .Build();
-
             return Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((builderContext, config) =>
                 {
                     var env = builderContext.HostingEnvironment;
-                    // Add config to the container
                     config.SetBasePath(env.ContentRootPath);
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
                     config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
@@ -38,7 +32,11 @@ namespace Affiliate.N88.Jobs
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    //webBuilder.UseUrls($"https://*:{configuration["Port"]}");
+                    var configuration = new ConfigurationBuilder()
+                        .SetBasePath(AppContext.BaseDirectory)
+                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                        .Build();
+                    //// webBuilder.UseUrls($"https://*:{configuration["Port"]}");
                 });
         }
     }

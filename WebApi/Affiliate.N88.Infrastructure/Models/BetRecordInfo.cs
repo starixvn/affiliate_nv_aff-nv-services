@@ -1,24 +1,22 @@
-﻿using System;
-
 namespace Affiliate.N88.Models
 {
     public class TransBetRecordInfo
     {
         public int TpId { get; set; }
 
-        public string TransId { get; set; }
+        public string? TransId { get; set; }
 
         public int GameType { get; set; }
 
-        public string CustId { get; set; }
+        public string? CustId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int? CurrencyId { get; set; }
 
         public int? SiteId { get; set; }
 
-        public string TpUserName { get; set; }
+        public string? TpUserName { get; set; }
 
         public DateTime? TransTime { get; set; }
 
@@ -32,7 +30,7 @@ namespace Affiliate.N88.Models
 
         public int? TicketStatus { get; set; }
 
-        public string OriginalState { get; set; }
+        public string? OriginalState { get; set; }
 
         public int? TicketKey { get; set; }
 

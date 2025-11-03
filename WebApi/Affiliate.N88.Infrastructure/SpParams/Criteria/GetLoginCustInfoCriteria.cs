@@ -1,4 +1,4 @@
-﻿using Fanex.Data.Repository;
+using Fanex.Data.Repository;
 
 namespace Affiliate.N88.SpParams.Criteria
 {
@@ -10,7 +10,7 @@ namespace Affiliate.N88.SpParams.Criteria
         public override bool IsValid()
             => true;
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int SiteId { get; set; }
     }

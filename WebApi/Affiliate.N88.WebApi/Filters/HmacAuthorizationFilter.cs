@@ -1,89 +1,88 @@
-﻿namespace Affiliate.N88.WebApi.Filters
-{
-    using System;
-    using System.Net;
-    using System.Net.Http;
-    using System.Runtime.Caching;
-    using System.Security.Cryptography;
-    using System.Security.Principal;
-    using System.Text;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Http;
-    using System.Web.Http.Controllers;
-    using System.Web.Http.Filters;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Caching.Memory;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
 
+namespace Affiliate.N88.WebApi.Filters
+{
     /// <summary>
     /// http://bitoftech.net/2014/12/15/secure-asp-net-web-api-using-api-key-authentication-hmac-authentication/
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public sealed class HmacAuthorizationFilter : AuthorizationFilterAttribute
+    public class HmacAuthorizationFilter : IAuthorizationFilter
     {
         private const long RequestMaxAgeInSeconds = 300;
         private const string TokenAuthenticationScheme = "amx";
         private readonly string sharedKey;
+        private readonly IMemoryCache memoryCache;
 
-        public HmacAuthorizationFilter(string sharedKey)
+        public HmacAuthorizationFilter(string sharedKey, IMemoryCache memoryCache)
         {
             this.sharedKey = sharedKey;
+            this.memoryCache = memoryCache;
         }
 
-        public override void OnAuthorization(HttpActionContext actionContext)
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if (actionContext == null)
+            if (context == null)
             {
-                throw new ArgumentNullException(nameof(actionContext), "Action Context cannot be null");
+                throw new ArgumentNullException(nameof(context), "Action Context cannot be null");
             }
 
-            var allowAnonymousAttributes = actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>(true);
-            if (allowAnonymousAttributes.Count > 0)
+            var allowAnonymousAttributes = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>();
+            if (allowAnonymousAttributes.Any())
             {
                 return;
             }
 
-            var request = actionContext.Request;
+            var request = context.HttpContext.Request;
 
-            if (request.Headers.Authorization != null && TokenAuthenticationScheme.Equals(request.Headers.Authorization.Scheme, StringComparison.OrdinalIgnoreCase))
+            if (request.Headers.Authorization.Count > 0)
             {
-                var rawAuthzHeader = request.Headers.Authorization.Parameter;
-                var autherizationHeaderArray = GetAutherizationHeaderValues(rawAuthzHeader);
-
-                if (autherizationHeaderArray != null)
+                var authHeader = request.Headers.Authorization.First();
+                if (authHeader != null && authHeader.StartsWith(TokenAuthenticationScheme + " "))
                 {
-                    var machineIP = autherizationHeaderArray[0];
-                    var incomingBase64Signature = autherizationHeaderArray[1];
-                    var nonce = autherizationHeaderArray[2];
-                    var requestTimeStamp = autherizationHeaderArray[3];
+                    var rawAuthzHeader = authHeader.Substring(TokenAuthenticationScheme.Length + 1);
+                    var autherizationHeaderArray = GetAutherizationHeaderValues(rawAuthzHeader);
 
-                    var isValid = IsValidRequest(request, machineIP, incomingBase64Signature, nonce, requestTimeStamp);
-
-                    if (isValid)
+                    if (autherizationHeaderArray != null)
                     {
-                        var currentPrincipal = new GenericPrincipal(new GenericIdentity(machineIP), null);
-                        Thread.CurrentPrincipal = currentPrincipal;
+                        var machineIP = autherizationHeaderArray[0];
+                        var incomingBase64Signature = autherizationHeaderArray[1];
+                        var nonce = autherizationHeaderArray[2];
+                        var requestTimeStamp = autherizationHeaderArray[3];
+
+                        var isValid = IsValidRequest(request, machineIP, incomingBase64Signature, nonce, requestTimeStamp);
+
+                        if (!isValid)
+                        {
+                            HandleUnauthorizedRequest(context);
+                        }
                     }
                     else
                     {
-                        HandleUnauthorizedRequest(actionContext);
+                        HandleUnauthorizedRequest(context);
                     }
                 }
                 else
                 {
-                    HandleUnauthorizedRequest(actionContext);
+                    HandleUnauthorizedRequest(context);
                 }
             }
             else
             {
-                HandleUnauthorizedRequest(actionContext);
+                HandleUnauthorizedRequest(context);
             }
         }
 
-        private void HandleUnauthorizedRequest(HttpActionContext actionContext)
+        private void HandleUnauthorizedRequest(AuthorizationFilterContext context)
         {
-            actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, "Request is not authenticated");
+            context.Result = new UnauthorizedObjectResult("Request is not authenticated");
         }
 
-        private string[] GetAutherizationHeaderValues(string rawAuthzHeader)
+        private string[]? GetAutherizationHeaderValues(string rawAuthzHeader)
         {
             var credArray = rawAuthzHeader.Split(':');
 
@@ -97,10 +96,10 @@
             }
         }
 
-        private bool IsValidRequest(HttpRequestMessage req, string siteId, string incomingBase64Signature, string nonce, string requestTimeStamp)
+        private bool IsValidRequest(HttpRequest req, string siteId, string incomingBase64Signature, string nonce, string requestTimeStamp)
         {
-            string requestUri = HttpUtility.UrlEncode(req.RequestUri.PathAndQuery.ToLower());
-            string requestHttpMethod = req.Method.Method;
+            string requestUri = HttpUtility.UrlEncode(req.Path + req.QueryString);
+            string requestHttpMethod = req.Method;
 
             if (IsReplayRequest(nonce, requestTimeStamp))
             {
@@ -123,7 +122,7 @@
 
         private bool IsReplayRequest(string nonce, string requestTimeStamp)
         {
-            if (MemoryCache.Default.Contains(nonce))
+            if (memoryCache.TryGetValue(nonce, out _))
             {
                 return true;
             }
@@ -139,9 +138,9 @@
                 return true;
             }
 
-            MemoryCache.Default.Add(nonce, requestTimeStamp, DateTimeOffset.UtcNow.AddSeconds(RequestMaxAgeInSeconds));
+            memoryCache.Set(nonce, requestTimeStamp, TimeSpan.FromSeconds(RequestMaxAgeInSeconds));
 
             return false;
-        } 
+        }
     }
 }

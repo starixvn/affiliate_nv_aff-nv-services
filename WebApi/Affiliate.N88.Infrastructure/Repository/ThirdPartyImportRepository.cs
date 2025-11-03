@@ -19,7 +19,7 @@ namespace Affiliate.N88.Repository
             await _dynamicRepository.ExecuteAsync(betRecord);
             if (betRecord.ErrCode != 0)
             {
-                throw new ImporterException(betRecord.ErrCode.ToString(), betRecord.ErrMsg, betRecord.XmlData);
+                throw new ImporterException(betRecord.ErrCode.ToString(), betRecord.ErrMsg ?? string.Empty, betRecord.XmlData ?? string.Empty);
             }
         }
     }

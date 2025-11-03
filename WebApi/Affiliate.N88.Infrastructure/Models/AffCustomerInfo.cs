@@ -1,5 +1,3 @@
-﻿
-using System;
 
 namespace Affiliate.N88.DTO
 {
@@ -9,17 +7,17 @@ namespace Affiliate.N88.DTO
 
         public int SiteId { get; set; }
 
-        public string SiteName { get; set; }
+        public string? SiteName { get; set; }
 
         public int? AffId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
-        public string Userpwd { get; set; }
+        public string? Userpwd { get; set; }
 
         public int? CurrencyId { get; set; }
 
-        public string UserLang { get; set; }
+        public string? UserLang { get; set; }
 
         public byte? ActStatus { get; set; }
 
@@ -39,6 +37,6 @@ namespace Affiliate.N88.DTO
 
         public int? Status { get; set; }
 
-        public string AffCode { get; set; }
+        public string? AffCode { get; set; }
     }
 }

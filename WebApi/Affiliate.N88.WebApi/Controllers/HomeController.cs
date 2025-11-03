@@ -1,40 +1,39 @@
 ﻿using Affiliate.N88.Models;
 using Affiliate.N88.SpParams.Criteria;
 using Fanex.Data.Repository;
-using System;
-using System.Configuration;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Affiliate.N88.WebApi.Controllers
 {
-    public class HomeController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class HomeController : ControllerBase
     {
-        private readonly IDynamicRepository dynamicRepository;
+        private readonly IDynamicRepository _dynamicRepository;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(IDynamicRepository dynamicRepository)
+        public HomeController(IDynamicRepository dynamicRepository, IConfiguration configuration)
         {
-            this.dynamicRepository = dynamicRepository;
+            _dynamicRepository = dynamicRepository;
+            _configuration = configuration;
         }
 
-        public ActionResult Index()
+        [HttpGet("Index")]
+        public async Task<ActionResult> Index()
         {
             var connectedMessage = "Database connects successfully";
             try
             {
-                dynamicRepository.Fetch<ServerInfo>(new GetServerInfoCriteria("Slave"));
+                await _dynamicRepository.FetchAsync<ServerInfo>(new GetServerInfoCriteria("Slave"));
             }
             catch (Exception ex)
             {
                 connectedMessage = ex.ToString();
             }
 
-            var env = ConfigurationManager.AppSettings.Get("Enviroment");
+            var env = _configuration["Enviroment"];
 
-            return new ContentResult
-            {
-                Content = $"Site is running {env} <br/> {connectedMessage}",
-                ContentType = "text/html"
-            };
+            return Content($"Site is running {env} <br/> {connectedMessage}", "text/html");
         }
     }
 }

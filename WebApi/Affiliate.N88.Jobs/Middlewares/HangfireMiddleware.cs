@@ -30,7 +30,7 @@ namespace Affiliate.N88.Jobs.Middlewares
 {
     public static class HangfireMiddleware
     {
-        private const string APPSETTING_ROOT = "AppSettings";
+        private const string AppSettingsRoot = "AppSettings";
 
         public static void RegisterHangfire(this IServiceCollection services, IConfiguration configuration)
         {
@@ -53,30 +53,31 @@ namespace Affiliate.N88.Jobs.Middlewares
                 config.UseFilter(serviceProvider.GetService<UMHangfireFilterAttribute>());
             });
 
+            const int SchedulePollingIntervalSeconds = 1;
             services.AddHangfireServer(options =>
             {
-                options.SchedulePollingInterval = TimeSpan.FromSeconds(1);
+                options.SchedulePollingInterval = TimeSpan.FromSeconds(SchedulePollingIntervalSeconds);
             });
 
             var appSettings = new AppSettings();
-            configuration.GetSection(APPSETTING_ROOT).Bind(appSettings);
+            configuration.GetSection(AppSettingsRoot).Bind(appSettings);
 
             //FetchAffCustomerDataTask
             services.AddScoped<IAffMemberRepository, AffImportRepository>();
-            services.Configure<LicenseeSiteSetting>(configuration.GetSection($"{APPSETTING_ROOT}:LicenseeSetting"));
+            services.Configure<LicenseeSiteSetting>(configuration.GetSection($"{AppSettingsRoot}:LicenseeSetting"));
 
             services.AddScoped<IFetchAffCustomerDataTask, FetchAffCustomerDataTask>().Configure<FetchServiceSetting>(
                 ServiceConfigName.PULL_AFF_CUSTOMER_SETTING,
-                configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_AFF_CUSTOMER_SETTING}"));
+                configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_AFF_CUSTOMER_SETTING}"));
 
             services.AddScoped<IFetchRealAffCustomerDataTask, FetchRealAffCustomerDataTask>().Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_REAL_AFF_CUSTOMER_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_REAL_AFF_CUSTOMER_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_REAL_AFF_CUSTOMER_SETTING}"));
 
             //TimeTrackerService
             services.AddScoped<ITrackerRepository, TrackerRespository>();
             services.AddScoped<ITrackerService, TimeTrackerService>();
-            services.Configure<TimeTrackerSetting>(configuration.GetSection($"{APPSETTING_ROOT}:TimeTrackerSetting"));
+            services.Configure<TimeTrackerSetting>(configuration.GetSection($"{AppSettingsRoot}:TimeTrackerSetting"));
 
             //DataTrackerService
             services.AddScoped<IDataTrackerRepository, DataTrackerRepository>();
@@ -87,171 +88,171 @@ namespace Affiliate.N88.Jobs.Middlewares
             services.AddScoped<IFetchBetRecordDataTask, FetchBetRecordDataTask>();
             services.Configure<FetchServiceSetting>(
                 ServiceConfigName.PULL_BET_RECORD_SETTING,
-                configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_BET_RECORD_SETTING}"));
+                configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_BET_RECORD_SETTING}"));
 
             //FetchCustomerDataTask
             services.AddScoped<IFetchCustomerDataTask, FetchCustomerDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_CUSTOMER_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_CUSTOMER_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_CUSTOMER_SETTING}"));
 
             services.AddScoped<IFetchRealCustomerDataTask, FetchRealCustomerDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_REAL_CUSTOMER_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_REAL_CUSTOMER_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_REAL_CUSTOMER_SETTING}"));
 
             //FetchServerInfoDataTask
             services.AddScoped<IFetchServerInfoDataTask, FetchServerInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_SERVER_INFO_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_SERVER_INFO_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_SERVER_INFO_SETTING}"));
 
             //FetchTpGameTypeDataTask
             services.AddScoped<IFetchGameTypeDataTask, FetchGameTypeDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_GAME_TYPE_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_GAME_TYPE_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_GAME_TYPE_SETTING}"));
 
             //FetchTpTransferInfoDataTask
             services.AddScoped<IFetchTpTransferInfoDataTask, FetchTpTransferInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_TPTRANSFER_INFO_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_TPTRANSFER_INFO_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_TPTRANSFER_INFO_SETTING}"));
 
             //FetchDepositInfoDataTask
             services.AddScoped<IFetchDepositInfoDataTask, FetchDepositInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_DEPOSIT_INFO_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_DEPOSIT_INFO_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_DEPOSIT_INFO_SETTING}"));
 
             services.AddScoped<IFetchRealDepositInfoDataTask, FetchRealDepositInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_REAL_DEPOSIT_INFO_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_REAL_DEPOSIT_INFO_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_REAL_DEPOSIT_INFO_SETTING}"));
 
             //FetchBonusInfoDataTask
             services.AddScoped<IFetchBonusInfoDataTask, FetchBonusInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_BONUS_INFO_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_BONUS_INFO_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_BONUS_INFO_SETTING}"));
 
             services.AddScoped<IFetchWeeklyBonusInfoDataTask, FetchWeeklyBonusInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_WEEKLY_BONUS_INFO_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_WEEKLY_BONUS_INFO_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_WEEKLY_BONUS_INFO_SETTING}"));
 
             //FetchCustRegInfoDataTask
             services.AddScoped<IFetchCustRegInfoDataTask, FetchCustRegInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_CUST_REG_INFO_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_CUST_REG_INFO_SETTING}"));
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_CUST_REG_INFO_SETTING}"));
 
             //FetchWithdrawalInfoDataTask
             services.AddScoped<IFetchWithdrawalInfoDataTask, FetchWithdrawalInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_WITHDRAWAL_INFO,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_WITHDRAWAL_INFO}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_WITHDRAWAL_INFO}")
                 );
 
             //FetchPromotionDataTask
             services.AddScoped<IFetchPromotionDataTask, FetchPromotionDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_PROMOTION_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_PROMOTION_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_PROMOTION_SETTING}")
                 );
 
             //FetchPromotionDataTask
             services.AddScoped<IFetchPromotionSpecificDataTask, FetchPromotionSpecificDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_PROMOTIONSPECIFIC_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_PROMOTIONSPECIFIC_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_PROMOTIONSPECIFIC_SETTING}")
                 );
 
             //FetchRebateMLogDataTask
             services.AddScoped<IFetchRebateMLogDataTask, FetchRebateMLogDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_REBATEMLOG_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_REBATEMLOG_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_REBATEMLOG_SETTING}")
                 );
 
             //FetchCustBonusRollOver
             services.AddScoped<IFetchCustBonusRolloverDataTask, FetchCustBonusRolloverDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_CUST_BONUS_ROLLOVER_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_CUST_BONUS_ROLLOVER_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_CUST_BONUS_ROLLOVER_SETTING}")
                 );
 
             //FetchCustClosingBalance
             services.AddScoped<IFetchCustClosingBalanceDataTask, FetchCustClosingBalanceDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_CUST_CLOSING_BALANCE_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_CUST_CLOSING_BALANCE_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_CUST_CLOSING_BALANCE_SETTING}")
                 );
 
             services.AddScoped<IFetchAdjustmentInfoDataTask, FetchAdjustmentInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_ADJUSTMENT_INFO_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_ADJUSTMENT_INFO_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_ADJUSTMENT_INFO_SETTING}")
                 );
 
             services.AddScoped<IFetchDrawLogDataTask, FetchDrawLogDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_DRAW_LOG_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_DRAW_LOG_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_DRAW_LOG_SETTING}")
                 );
 
             services.AddScoped<IFetchEventDrawDataTask, FetchEventDrawDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_EVENT_DRAW_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_EVENT_DRAW_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_EVENT_DRAW_SETTING}")
                 );
 
             services.AddScoped<IFetchVipUpgradeReviewDataTask, FetchVipUpgradeReviewDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_VIP_UPGRADE_REVIEW_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_VIP_UPGRADE_REVIEW_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_VIP_UPGRADE_REVIEW_SETTING}")
                 );
 
             services.AddScoped<IFetchLogAdminAdjustWalletDataTask, FetchLogAdminAdjustWalletDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_LOG_ADMIN_ADJUST_WALLET_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_LOG_ADMIN_ADJUST_WALLET_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_LOG_ADMIN_ADJUST_WALLET_SETTING}")
                 );
 
             services.AddScoped<IFetchCustVerificationRewardDataTask, FetchCustVerificationRewardDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_CUST_VERIFICATION_REWARD_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_CUST_VERIFICATION_REWARD_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_CUST_VERIFICATION_REWARD_SETTING}")
                 );
 
             services.AddScoped<IFetchReferralMLogDataTask, FetchReferralMLogDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_REFERRALMLOG_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_REFERRALMLOG_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_REFERRALMLOG_SETTING}")
                 );
 
             services.AddScoped<IFetchReferralLogDataTask, FetchReferralLogDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_REFERRALLOG_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_REFERRALLOG_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_REFERRALLOG_SETTING}")
                 );
 
             services.AddScoped<IFetchTpReport9WDataTask, FetchTpReport9WDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_TPREPORT_9W_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_TPREPORT_9W_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_TPREPORT_9W_SETTING}")
                 );
 
             services.AddScoped<IFetchTpWager9WDataTask, FetchTpWager9WDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.PULL_TPWAGER_9W_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.PULL_TPWAGER_9W_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.PULL_TPWAGER_9W_SETTING}")
                 );
 
             services.AddScoped<IReInsertAffiliateInfoDataTask, ReInsertAffiliateInfoDataTask>()
                 .Configure<FetchServiceSetting>(
                     ServiceConfigName.INSERT_AFFILIATE_SETTING,
-                    configuration.GetSection($"{APPSETTING_ROOT}:{ServiceConfigName.INSERT_AFFILIATE_SETTING}")
+                    configuration.GetSection($"{AppSettingsRoot}:{ServiceConfigName.INSERT_AFFILIATE_SETTING}")
                 );
         }
 
@@ -261,7 +262,7 @@ namespace Affiliate.N88.Jobs.Middlewares
             {
                 DisplayStorageConnectionString = false,
                 IgnoreAntiforgeryToken = true,
-                Authorization = new[] { new AllowedAnonymouseAuthorizationFilter() }
+                Authorization = new[] { new AllowedAnonymousAuthorizationFilter() }
             });
             Logger.Log.Info($"AFF NV CronJobs on {Dns.GetHostName()}");
 
@@ -326,12 +327,14 @@ namespace Affiliate.N88.Jobs.Middlewares
             RegisterTask<IFetchEventDrawDataTask>($"{typeof(IFetchEventDrawDataTask).Name}", appSettings.PullEventDrawSetting.PullInfoCron, job => job.FetchDataAsync());
 
             RegisterTask<IFetchVipUpgradeReviewDataTask>($"{typeof(IFetchVipUpgradeReviewDataTask).Name}", appSettings.PullVipUpgradeReviewSetting.PullInfoCron, job => job.FetchDataAsync());
-            
+
             RegisterTask<IFetchVipUpgradeReviewDataTask>($"{typeof(IFetchVipUpgradeReviewDataTask).Name}-Monthly", Cron.Monthly(7, 2, 0), job => job.FetchLastMonthDataAsync());
 
-            RegisterTask<IFetchLogAdminAdjustWalletDataTask>($"{typeof(IFetchLogAdminAdjustWalletDataTask).Name}", appSettings.PullLogAdminAdjustWalletSetting.PullInfoCron, job => job.FetchDataAsync());
+            RegisterTask<IFetchLogAdminAdjustWalletDataTask>($"{typeof(IFetchLogAdminAdjustWalletDataTask).Name}", 
+                appSettings.PullLogAdminAdjustWalletSetting.PullInfoCron, job => job.FetchDataAsync());
 
-            RegisterTask<IFetchCustVerificationRewardDataTask>($"{typeof(IFetchCustVerificationRewardDataTask).Name}", appSettings.PullCustVerificationRewardSetting.PullInfoCron, job => job.FetchDataAsync());
+            RegisterTask<IFetchCustVerificationRewardDataTask>($"{typeof(IFetchCustVerificationRewardDataTask).Name}", 
+                appSettings.PullCustVerificationRewardSetting.PullInfoCron, job => job.FetchDataAsync());
 
             RegisterTask<IFetchReferralMLogDataTask>($"{typeof(IFetchReferralMLogDataTask).Name}", appSettings.PullReferralMLogSetting.PullInfoCron, job => job.FetchDataAsync());
 
@@ -362,7 +365,7 @@ namespace Affiliate.N88.Jobs.Middlewares
         }
     }
 
-    public class AllowedAnonymouseAuthorizationFilter : IDashboardAuthorizationFilter
+    public class AllowedAnonymousAuthorizationFilter : IDashboardAuthorizationFilter
     {
         public bool Authorize(DashboardContext context)
         {

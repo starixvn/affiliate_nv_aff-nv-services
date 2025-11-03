@@ -12,7 +12,7 @@ namespace Affiliate.N88.SpParams.Commands
 
         public int CustId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int SiteId { get; set; }
 
@@ -20,9 +20,9 @@ namespace Affiliate.N88.SpParams.Commands
 
         public int Type { get; set; }
 
-        public string Memo { get; set; }
+        public string? Memo { get; set; }
 
-        public string RefTransId { get; set; }
+        public string? RefTransId { get; set; }
 
         public decimal AfterAmount { get; set; }
     }

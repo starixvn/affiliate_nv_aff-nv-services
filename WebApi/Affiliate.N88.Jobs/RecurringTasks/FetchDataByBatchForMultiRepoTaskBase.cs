@@ -1,4 +1,5 @@
 ﻿using Affiliate.N88.Jobs.Configurations;
+using Affiliate.N88.Jobs.Constants;
 using Affiliate.N88.Models;
 using Affiliate.N88.Repository;
 using Affiliate.N88.Services;
@@ -14,11 +15,9 @@ namespace Affiliate.N88.Jobs.RecurringTasks
     public abstract class FetchDataByBatchForMultiRepoTaskBase<TData, TTracker> : FetchDataForMultipleRepositoryTaskBase<TData>
         where TData : class
     {
-        protected const int MAX_ROW_COUNT = 2000;
-
         protected readonly ITrackerService _timeTrackerService;
 
-        protected override int PagingSize => MAX_ROW_COUNT;
+        protected override int PagingSize => SettingConstant.MAX_ROW_COUNT;
 
 
         protected FetchDataByBatchForMultiRepoTaskBase(IThirdPartyImportRepository thirdPartyImportRepository, FetchServiceSetting setting, ITrackerService trackerService) 

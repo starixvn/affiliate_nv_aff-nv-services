@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace Affiliate.N88.Models
 {
     public class ReferralLogModel
@@ -10,7 +8,7 @@ namespace Affiliate.N88.Models
 
         public int CurrencyId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int SiteId { get; set; }
 
@@ -20,7 +18,7 @@ namespace Affiliate.N88.Models
 
         public decimal ReferralAmount { get; set; }
 
-        public string Memo { get; set; }
+        public string? Memo { get; set; }
 
         public long RelId { get; set; }
 

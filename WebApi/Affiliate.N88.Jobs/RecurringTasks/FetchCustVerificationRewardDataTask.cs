@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.Constants;
 using Affiliate.N88.Jobs.RecurringTasks.Interfaces;
@@ -19,7 +20,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
     public class FetchCustVerificationRewardDataTask : FetchDataForMultipleRepositoryTaskBase<CustVerificationReward>, IFetchCustVerificationRewardDataTask
     {
         private readonly ITrackerService _timeTrackerService;
-        private readonly ILicenseeApi _liceseeApi;
+        private readonly ILicenseeApi _licenseeApi;
 
         private const string PHONE_REWARD_FIELD = "PhoneRewardTime";
         private const string EMAIL_REWARD_FIELD = "EmailRewardTime";
@@ -32,7 +33,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             : base(_thirdPartyRepo, configuration.Get(Constants.ServiceConfigName.PULL_CUST_VERIFICATION_REWARD_SETTING))
         {
             _timeTrackerService = timeTrackerService ?? throw new ArgumentNullException(nameof(timeTrackerService));
-            _liceseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
+            _licenseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
         }
 
         public override async Task FetchDataAsync()
@@ -46,7 +47,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks
             var emailTrackerTime = await ImportAndGetEmailRewardTrackTime(fromDate);
             var phoneTrackeTime = await ImportAndGetPhoneRewardTrackTime(fromDate);
             var minTrackerTime = emailTrackerTime <= phoneTrackeTime ? emailTrackerTime : phoneTrackeTime;
-            if (minTrackerTime != default(DateTime))
+            if (minTrackerTime != DateTime.MinValue)
             {
                 await _timeTrackerService.SaveTrackerAsync(TableName, new TrackerInfo
                 {
@@ -66,12 +67,12 @@ namespace Affiliate.N88.Jobs.RecurringTasks
         {
             var queryDate = fromDate;
             var isFirstTimeQuery = true;
-            DateTime trackerDate = default(DateTime);
-            var data = new List<CustVerificationReward>().AsEnumerable();
+            DateTime trackerDate = DateTime.MinValue;
+            var data = Enumerable.Empty<CustVerificationReward>();
             while (isFirstTimeQuery || data.Count() == MAX_BATCH_COUNT)
             {
                 isFirstTimeQuery = false;
-                data = await _liceseeApi.GetCustVerificationRewards(queryDate, conditionFieldName, MAX_BATCH_COUNT);
+                data = await _licenseeApi.GetCustVerificationRewards(queryDate, conditionFieldName, MAX_BATCH_COUNT);
                 if (data.Any())
                 {
                     await ImportDataToMultipleRepoAsync(data);

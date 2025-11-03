@@ -15,7 +15,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Log
 {
     public interface IFetchLogAdminAdjustWalletDataTask : IFetchDataTask { }
 
-    public class FetchLogAdminAdjustWalletDataTask : FetchDataByBatchForMultiRepoTaskBase<LogAdminAjustWalletInfo, string>, IFetchLogAdminAdjustWalletDataTask
+    public class FetchLogAdminAdjustWalletDataTask : FetchDataByBatchForMultiRepoTaskBase<LogAdminAdjustWalletInfo, string>, IFetchLogAdminAdjustWalletDataTask
     {
         private readonly ILicenseeApi _licenseeApi;
         private readonly ILogger _logger;
@@ -31,13 +31,13 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Log
             _licenseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
         }
 
-        protected override Task<IEnumerable<LogAdminAjustWalletInfo>> GetDataAsync(string trackValue, int batchCount)
+        protected override Task<IEnumerable<LogAdminAdjustWalletInfo>> GetDataAsync(string trackValue, int batchCount)
         {
             var id = Convert.ToInt32(trackValue);
             return _licenseeApi.GetLogAdminAdjustWallet(id, batchCount);
         }
 
-        protected override string GetInsertTrackingValue(IEnumerable<LogAdminAjustWalletInfo> data)
+        protected override string GetInsertTrackingValue(IEnumerable<LogAdminAdjustWalletInfo> data)
             => data.Max(d => d.TransferId).ToString();
 
         protected override async Task<string> GetLastTrackingValueAsync()

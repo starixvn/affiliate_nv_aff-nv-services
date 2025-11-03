@@ -1,14 +1,12 @@
-﻿using System;
-
 namespace Affiliate.N88.WebApi.DTO
 {
     public class Promotion
     {
-        public string BonusCode { get; set; }
+        public string? BonusCode { get; set; }
 
         public int SiteId { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public int PromotionType { get; set; }
 
@@ -28,13 +26,13 @@ namespace Affiliate.N88.WebApi.DTO
 
         public int Sort { get; set; }
 
-        public string CreateTime { get; set; }
+        public string? CreateTime { get; set; }
 
         public int Status { get; set; }
 
         public DateTime? LastUpdateTime { get; set; }
 
-        public string LastUpdateUser { get; set; }
+        public string? LastUpdateUser { get; set; }
 
         public int? WalletType { get; set; }
 
@@ -44,7 +42,7 @@ namespace Affiliate.N88.WebApi.DTO
 
         public int? PeriodDay { get; set; }
 
-        public string SpecialCode { get; set; }
+        public string? SpecialCode { get; set; }
 
         public bool IsSpecial { get; set; }
     }

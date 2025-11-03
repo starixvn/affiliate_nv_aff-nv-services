@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Affiliate.N88.DTOs
+﻿namespace Affiliate.N88.DTOs
 {
     public class TrackerItem
     {

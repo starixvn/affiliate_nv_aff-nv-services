@@ -1,16 +1,14 @@
-﻿using System;
-
 namespace Affiliate.N88.Models
 {
     public class AffCustomerModel
     {
         public int SiteId { get; set; }
 
-        public string SiteName { get; set; }
+        public string? SiteName { get; set; }
 
         public int CustId { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public int? CurrencyId { get; set; }
 
@@ -26,7 +24,7 @@ namespace Affiliate.N88.Models
 
         public bool? IsTest { get; set; }
 
-        public string AffCode { get; set; }
+        public string? AffCode { get; set; }
 
         public int? AffMediaLinkId { get; set; }
 

@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`note - components - AppContainer render correctly 1`] = `
-<AppLayout>
-  <Connect(Content) />
-  <Connect(InsertUpdateNoteForm) />
-</AppLayout>
-`;

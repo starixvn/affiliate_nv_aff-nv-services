@@ -1,4 +1,5 @@
-﻿using Affiliate.N88.Jobs.Apis;
+﻿using Affiliate.N88.Constants;
+using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.Configurations;
 using Affiliate.N88.Jobs.Constants;
 using Affiliate.N88.Models;
@@ -15,11 +16,10 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
 {
     public abstract class BaseCustomerDataTask : FetchDataForMultipleRepositoryTaskBase<CustomerInfo>
     {
-        protected const int BATCH_COUNT = 2000;
         protected virtual bool IsNeedRealData => false;
 
         private readonly ITrackerService _timeTrackerService;
-        protected readonly ILicenseeApi _liceseeApi;
+        protected readonly ILicenseeApi _licenseeApi;
 
         public BaseCustomerDataTask(IThirdPartyImportRepository thirdPartyImportRepository
             , ILicenseeApi licenseeApi
@@ -29,7 +29,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
             : base(thirdPartyImportRepository, fetchServiceSetting)
         {
             _timeTrackerService = timeTrackerService ?? throw new ArgumentNullException(nameof(timeTrackerService));
-            _liceseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
+            _licenseeApi = licenseeApi ?? throw new ArgumentNullException(nameof(licenseeApi));
         }
 
         public override async Task FetchDataAsync()
@@ -61,7 +61,11 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
             {
                 await HandleImportDataAsync(range.FromDate, range.ToDate);
 
-                var tracker = new TrackerInfo { CalledTime = DateTime.Now, KeyValue = range.ToDate.ToString(Format.DateTimeFormat) };
+                var tracker = new TrackerInfo 
+                { 
+                    CalledTime = DateTimeOffset.Now.DateTime, 
+                    KeyValue = range.ToDate.ToString(Format.DateTimeFormat) 
+                };
                 await _timeTrackerService.SaveTrackerAsync(TableName, tracker);
             }
         }
@@ -70,7 +74,7 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
         {
             var lastDateRange = dateRanges.LastOrDefault();
 
-            if (lastDateRange.ToDate != default(DateTime))
+            if (lastDateRange.ToDate != DateTimeOffset.MinValue)
             {
                 await HandleImportDataAsync(lastDateRange.ToDate, apiServerNow.AddSeconds(-5));
             }
@@ -81,14 +85,14 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
             int pageIndex = 0;
             while (true)
             {
-                var data = await _liceseeApi.GetCustomersAsync(fromDate, toDate, pageIndex, BATCH_COUNT);
+                var data = await _licenseeApi.GetCustomersAsync(fromDate, toDate, pageIndex, SettingConstant.MAX_ROW_COUNT);
                 if (!data.Any())
                 {
                     break;
                 }
                 await ImportDataToMultipleRepoAsync(data);
                 pageIndex++;
-                if (data.Count() < BATCH_COUNT)
+                if (data.Count() < SettingConstant.MAX_ROW_COUNT)
                 {
                     break;
                 }
