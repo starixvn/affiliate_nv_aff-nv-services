@@ -36,13 +36,6 @@ namespace Affiliate.N88.WebApi.Controllers
             return Ok(await _dynamicRepository.FetchAsync<CustomerInfo>(new GetCustomersCriteria(fromDate, toDate, pageIndex, pageSize)));
         }
 
-        [HttpGet("GetFixedCustomers")]
-        public async Task<ActionResult<IEnumerable<CustomerInfo>>> GetFixedCustomers()
-        {
-            var result = await _dynamicRepository.FetchAsync<CustomerInfo>(new GetFixedCustomerCriteria());
-            return Ok(result);
-        }
-
         [HttpGet("GetCustWallets")]
         public async Task<ActionResult<IEnumerable<CustWalletInfo>>> GetCustWallets(DateTime fromDate)
             => Ok(await _dynamicRepository.FetchAsync<CustWalletInfo>(new GetCustWalletCriteria(fromDate)));

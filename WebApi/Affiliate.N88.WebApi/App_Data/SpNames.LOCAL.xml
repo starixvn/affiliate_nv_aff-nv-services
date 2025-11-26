@@ -39,7 +39,4 @@
     <Setting Key="API_TpReport9W_Get" SpName="API_TpReport9W_Get_V2" DbName="B2CMemberSite.BetDetail.Affiliate_Api"/>
     <Setting Key="API_TpWager9W_Get" SpName="API_TpWager9W_Get_V2" DbName="B2CMemberSite.BetDetail.Affiliate_Api"/>  
   </Function>
-  <Function Name="Test">
-    <Setting Key="N88_Get_Customer_xtest" SpName="N88_Get_Customer_xtest" DbName="N88Licensee_Read"/>
-  </Function>
 </Functions>

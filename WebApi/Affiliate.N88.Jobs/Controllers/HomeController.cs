@@ -1,6 +1,5 @@
 ﻿using Affiliate.N88.Jobs.Apis;
 using Affiliate.N88.Jobs.RecurringTasks;
-using Affiliate.N88.Jobs.RecurringTasks.Customer;
 using Affiliate.N88.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,13 +14,11 @@ namespace Affiliate.N88.Jobs.Controllers
     {
         private readonly ILicenseeApi _licenseeApi;
         private readonly IFetchBetRecordDataTask _fetchBetRecordService;
-        private readonly IFetchCustomerDataTask _fetchCustomerService;
 
-        public HomeController(ILicenseeApi lincenseeApi, IFetchBetRecordDataTask fetchBetRecordService, IFetchCustomerDataTask fetchCustomerDataTask)
+        public HomeController(ILicenseeApi lincenseeApi, IFetchBetRecordDataTask fetchBetRecordService)
         {
             _licenseeApi = lincenseeApi;
             _fetchBetRecordService = fetchBetRecordService;
-            _fetchCustomerService = fetchCustomerDataTask;
         }
 
         [HttpGet]
@@ -34,7 +31,7 @@ namespace Affiliate.N88.Jobs.Controllers
         [HttpGet("CheckConnection")]
         public async Task<string> CheckConnection()
         {
-            return await  _licenseeApi.CheckConnection();
+            return await _licenseeApi.CheckConnection();
         }
 
         [HttpGet("GetCustomers")]
@@ -53,13 +50,6 @@ namespace Affiliate.N88.Jobs.Controllers
         public async Task<string> PullBetRecord(DateTime fromDate, DateTime toDate)
         {
             await _fetchBetRecordService.FetchDataAsync(fromDate, toDate);
-            return "Finished Pull";
-        }
-
-        [HttpGet("PullFixedCustomer")]
-        public async Task<string> PullFixedCustomer()
-        {
-            await _fetchCustomerService.FetchFixedDataTask();
             return "Finished Pull";
         }
     }

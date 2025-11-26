@@ -23,10 +23,6 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
         [DisableConcurrentExecution(60)]
         [AutomaticRetry(OnAttemptsExceeded = AttemptsExceededAction.Fail, Attempts = 1)]
         Task FetchDataByDateRangeTask();
-
-        [DisableConcurrentExecution(60)]
-        [AutomaticRetry(OnAttemptsExceeded = AttemptsExceededAction.Fail, Attempts = 1)]
-        Task FetchFixedDataTask();
     }
 
     public sealed class FetchCustomerDataTask : BaseCustomerDataTask, IFetchCustomerDataTask
@@ -70,12 +66,6 @@ namespace Affiliate.N88.Jobs.RecurringTasks.Customer
                     }
                 }
             }
-        }
-
-        public async Task FetchFixedDataTask()
-        {
-            var data = await _licenseeApi.GetFixedCustomers();
-            await ImportDataToMultipleRepoAsync(data);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Fanex.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
 using Refit;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
